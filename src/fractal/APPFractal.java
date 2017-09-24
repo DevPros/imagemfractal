@@ -1,5 +1,6 @@
 package fractal;
 
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -9,17 +10,16 @@ import javax.swing.JPanel;
  */
 public class APPFractal extends JPanel{
     
-    FractalImage img = new FractalImage();
+    //FractalImage img = new FractalImage();
    
     public static void main(String[] args) {
         JFrame window = new JFrame("Fractal");
-        
-        // exit on close
+        FractalImage f = new FractalImage(800,600);// exit on close
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // center window
-        window.setLocationRelativeTo(null);
-        window.pack();
         window.setVisible(true);
-
+        window.getContentPane().add(f);
+        window.pack();
+        window.setLocationRelativeTo(null);
     }
 }

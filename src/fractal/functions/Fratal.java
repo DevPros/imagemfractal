@@ -11,7 +11,7 @@ import fractal.Complex;
  *
  * @author canoso
  */
-public abstract class fractalFunction {
+public abstract class Fratal {
 
     public abstract int getDivergentIteration(Complex c);
 }
