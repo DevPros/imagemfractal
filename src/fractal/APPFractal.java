@@ -21,5 +21,7 @@ public class APPFractal extends JPanel{
         window.getContentPane().add(f);
         window.pack();
         window.setLocationRelativeTo(null);
+        
+     
     }
 }

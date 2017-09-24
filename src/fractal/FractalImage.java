@@ -24,9 +24,9 @@ public class FractalImage extends JComponent implements MouseListener {
 
     private double reX; //?
     private double reY; //?
-    private double centerX; //?
-    private double centerY; //?
-    private double zoom;
+    private double centerX = 0; //?
+    private double centerY = 0; //?
+    private double zoom = 0;
 
     public void resizeImg(int width, int height) {
         this.width = width;
@@ -35,7 +35,10 @@ public class FractalImage extends JComponent implements MouseListener {
         this.setPreferredSize(new Dimension(width, height)); //?
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
         //FractalImage(width,height);
+        this.addMouseListener(this);
+        zoom = (4.00 / width) * 2;
         calculateFractal();
+
     }
 
     @Override
@@ -51,7 +54,7 @@ public class FractalImage extends JComponent implements MouseListener {
     }
 
     private void calculateFractal() {
-        double zoom = 4.00 / width;
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 double reX = centerX + (x - width / 2) * zoom; // ??
@@ -73,17 +76,21 @@ public class FractalImage extends JComponent implements MouseListener {
     public FractalImage(int width, int height) {
         setFractalFunction(new madelbroth());
         resizeImg(width, height);
+        //this.addMouseListener(this);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        double reX = centerX + (e.getX() - width/2)*zoom;
-        double reY = centerY + (e.getY() - height/2)*zoom;
-        
         if (e.getButton() == MouseEvent.BUTTON1) {
-            centerX = reX;
-            centerY = reY;
-            zoom = 2;
+            centerX = centerX + (e.getX() - width / 2) * zoom;
+            centerY = centerY - (e.getY() - height / 2) * zoom;
+            zoom *= 1.2;
+            calculateFractal();
+        }
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            centerX = centerX + (e.getX() - width / 2) * zoom;
+            centerY = centerY - (e.getY() - height / 2) * zoom;
+            zoom /= 1.2;
             calculateFractal();
         }
         repaint();
