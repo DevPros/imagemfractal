@@ -1,12 +1,13 @@
 package fractal;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author canoso
  */
-public class APPFractal {
+public class APPFractal extends JPanel{
     
     FractalImage img = new FractalImage();
    

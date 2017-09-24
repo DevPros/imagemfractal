@@ -5,23 +5,21 @@
  */
 package fractal.functions;
 
-import fractal.complex;
+import fractal.Complex;
 
 /**
  *
  * @author canoso
  */
 public class madelbroth extends fractalFunction {
-
     @Override
-    public int getDivergentIteration(complex c) {
-        complex z = new complex(0,0);
+    public int getDivergentIteration(Complex c) {
+        Complex z = new Complex(0,0);
         int itera = 0;
         while (z.distanceToOrigin() < 2 && itera < 256) {
             z = z.times(z).plus(c);
             itera++;
         }
         return itera;
-    }
-    
+    } 
 }

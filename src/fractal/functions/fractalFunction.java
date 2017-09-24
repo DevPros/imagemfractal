@@ -5,13 +5,13 @@
  */
 package fractal.functions;
 
-import fractal.complex;
+import fractal.Complex;
 
 /**
  *
  * @author canoso
  */
 public abstract class fractalFunction {
-    
-    public abstract int getDivergentIteration (complex c);
+
+    public abstract int getDivergentIteration(Complex c);
 }

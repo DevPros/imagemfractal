@@ -26,12 +26,8 @@ public class FractalImage extends JComponent implements MouseListener {
     private double centerY; //?
     private double zoom;
 
-    public FractalImage(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
     
-    public void reciveImg(int width, int height) {
+    public void resizeImg(int width, int height) {
         this.width = width;
         this.height = height;
         
@@ -46,17 +42,17 @@ public class FractalImage extends JComponent implements MouseListener {
         gr.drawImage(img, 0, 0, null);
     }
     
-    public void setFractalFunction(fractal func) {
-        this.func = func;
+    public void setFractalFunction(fractalFunction func) {
+        this.fractal = func;
     }
     
     private void calculateFractal () {
         double zoom = 4/width;
         for (int y = 0; y<height;y++){
             for (int x = 0; x<width;x++){
-                double reX = (x - width (2) + zoom); // ??
-                double reY = (y - height (2) + zoom); //??
-                int index = fractal.getDivergentIteration(new complex(reX, reY));
+                double reX = (x - width/2 + zoom); // ??
+                double reY = (y - height/2 + zoom); //??
+                int index = fractal.getDivergentIteration(new Complex(reX, reY));
                 
                 if (index == 256){
                     img.setRGB(x, y, Color.BLACK.getRGB());
@@ -78,8 +74,8 @@ public class FractalImage extends JComponent implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        double reX = centerX + (e.getX() - width (2)*zoom);
-        double reY = centerY + (e.getY() - height (2)*zoom);
+        double reX = centerX + (e.getX() - width/2*zoom);
+        double reY = centerY + (e.getY() - height/2*zoom);
         
         if (e.getButton() == MouseEvent.BUTTON1) {
             centerX = reX;
