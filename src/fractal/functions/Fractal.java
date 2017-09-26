@@ -5,13 +5,25 @@
  */
 package fractal.functions;
 
-import fractal.Complex;
+import vendor.Complex;
 
 /**
  *
  * @author canoso
  */
-public abstract class Fratal {
+public abstract class Fractal {
+    long maxIter = 256;
 
+    public Fractal() {
+    }
+
+    public Fractal(long iter) {
+        this.maxIter = iter;
+    }
+    
+    public long getMaxIter() {
+        return maxIter;
+    }
+    
     public abstract int getDivergentIteration(Complex c);
 }

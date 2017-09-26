@@ -5,19 +5,27 @@
  */
 package fractal.functions;
 
-import fractal.Complex;
+import vendor.Complex;
 
 /**
  *
  * @author canoso
  */
-public class madelbroth extends Fratal {
+public class FractInventado extends Fractal {
+
+    public FractInventado() {
+    }
+
+    public FractInventado(long iter) {
+        super(iter);
+    }
+    
     @Override
     public int getDivergentIteration(Complex c) {
         Complex z = new Complex(0,0);
         int itera = 0;
-        while (z.distanceToOrigin() < 2 && itera < 256) {
-            z = z.times(z).plus(c);
+        while (z.distanceToOrigin() < 2 && itera < super.maxIter) {
+            z = z.times(z).times(z).plus(c);
             itera++;
         }
         return itera;
