@@ -9,13 +9,12 @@ import javax.swing.JPanel;
  */
 public class APPFractal extends JPanel {
 
-    //FractalImage img = new FractalImage();
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 JFrame window = new JFrame("Fractal");
-                FractalImage f = new FractalImage(800, 600);// exit on close
+                FractalImage f = new FractalImage(800, 600);
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 // center window
                 window.setVisible(true);

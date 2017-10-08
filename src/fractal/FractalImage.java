@@ -1,14 +1,16 @@
 package fractal;
 
 import fractal.functions.Fratal;
+import fractal.functions.julia;
 import fractal.functions.madelbroth;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,37 +18,31 @@ import java.awt.Dimension;
  */
 public class FractalImage extends JComponent implements MouseListener {
 
-    private BufferedImage img;
-    private Fratal fractal; //??
+    BufferedImage img;
+    Fratal fractal;
 
-    private int width;
-    private int height;
+    int width;
+    int height;
 
-    private double reX; //?
-    private double reY; //?
-    private double centerX = 0; //?
-    private double centerY = 0; //?
-    private double zoom = 0;
+    double centerX = 0;
+    double centerY = 0;
+    double zoom = 0;
 
     public void resizeImg(int width, int height) {
         this.width = width;
         this.height = height;
 
-        this.setPreferredSize(new Dimension(width, height)); //?
+        this.setPreferredSize(new Dimension(width, height));
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
-        //FractalImage(width,height);
         this.addMouseListener(this);
         zoom = (4.00 / width) * 2;
         calculateFractal();
-
     }
 
     @Override
     public void paintComponent(Graphics gr) {
         gr.drawImage(img, 0, 0, null);
-        gr.setColor(Color.green);
-        //gr.drawString("TESTE", width, height);
-
+        
     }
 
     public void setFractalFunction(Fratal func) {
@@ -54,17 +50,23 @@ public class FractalImage extends JComponent implements MouseListener {
     }
 
     private void calculateFractal() {
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                double reX = centerX + (x - width / 2) * zoom; // ??
-                double reY = centerY - (y - height / 2) * zoom; //??
-                int index = fractal.getDivergentIteration(new Complex(reX, reY));
-                if (index == 256) {
-                    img.setRGB(x, y, Color.BLACK.getRGB());
-                } else {
-                    img.setRGB(x, y, Color.WHITE.getRGB());
-                }
+        // Array de threads com o nº de processadores
+        int cores = Runtime.getRuntime().availableProcessors();
+        FractalThread[] thr = new FractalThread[cores];
+        
+        int dim = this.height / cores;
+        
+        for (int i = 0; i < cores; i++) {
+            //thr[i] = new FractalThread(i+dim,(i+1)*dim, this);
+            thr[i] = new FractalThread(dim * i,(i+1)*dim, this);
+            thr[i].start();
+        }
+        
+        for (int i = 0; i < cores; i++) {
+            try {
+                thr[i].join();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FractalImage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -76,7 +78,6 @@ public class FractalImage extends JComponent implements MouseListener {
     public FractalImage(int width, int height) {
         setFractalFunction(new madelbroth());
         resizeImg(width, height);
-        //this.addMouseListener(this);
     }
 
     @Override

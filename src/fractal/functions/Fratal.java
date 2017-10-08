@@ -12,6 +12,8 @@ import fractal.Complex;
  * @author canoso
  */
 public abstract class Fratal {
+    long maxIter = 256; // default was 256
+    
 
     public abstract int getDivergentIteration(Complex c);
 }
