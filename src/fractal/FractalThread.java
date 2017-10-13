@@ -11,7 +11,8 @@ import java.awt.Color;
  *
  * @author Canoso
  */
-public class FractalThread extends Thread{
+public class FractalThread extends Thread {
+
     int ini, fin;
     FractalImage frac;
 
@@ -20,9 +21,9 @@ public class FractalThread extends Thread{
         this.fin = fin;
         this.frac = fractal;
     }
-    
+
     @Override
-    public void run(){
+    public void run() {
         for (int y = 0; y < frac.height; y++) {
             for (int x = 0; x < frac.width; x++) {
                 double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
@@ -33,16 +34,20 @@ public class FractalThread extends Thread{
                     Color color = new Color(0, 0, 0);
                     frac.img.setRGB(x, y, color.getRGB());
                 } else {
+                    int color = Color.HSBtoRGB((float) index / 256, 1, 1);
+                    frac.img.setRGB(x, y, color);
+                }
+                /*else {
+                    int val = 255;
                     double red = index | (index << 2);
-                    while (red > 255) { red-=255; }
+                    while (red >= val) { red-=val; }
                     double green = index | (index << 4);
-                    while (green > 255) { green-=255; }
+                    while (green >= val) { green-=val; }
                     double blue = index | (index << 8);
-                    while (blue > 255) { blue-=255; }
-                    
+                    while (blue >= val) { blue-=val; }
                     Color color = new Color((int) red, (int) green, (int) blue);
                     frac.img.setRGB(x, y, color.getRGB());
-                }
+                }*/
             }
         }
     }

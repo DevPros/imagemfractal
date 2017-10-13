@@ -1,7 +1,7 @@
 package fractal;
 
 import fractal.functions.Fratal;
-import fractal.functions.julia;
+import fractal.functions.BurningShip;
 import fractal.functions.madelbroth;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -72,11 +72,11 @@ public class FractalImage extends JComponent implements MouseListener {
     }
 
     public FractalImage() {
-        this(800, 600);
+        this(1920, 1080);
     }
 
     public FractalImage(int width, int height) {
-        setFractalFunction(new madelbroth());
+        setFractalFunction(new BurningShip());
         resizeImg(width, height);
     }
 
