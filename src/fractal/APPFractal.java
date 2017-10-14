@@ -14,7 +14,7 @@ public class APPFractal extends JPanel {
             @Override
             public void run() {
                 JFrame window = new JFrame("Fractal");
-                FractalImage f = new FractalImage(3840, 2160);
+                FractalImage f = new FractalImage(1360, 780);
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 // center window
                 window.setVisible(true);
