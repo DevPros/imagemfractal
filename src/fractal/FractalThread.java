@@ -30,9 +30,7 @@ public class FractalThread extends Thread {
                 double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
                 if (index == 256) {
-                    // White
-                    Color color = new Color(0, 0, 0);
-                    frac.img.setRGB(x, y, color.getRGB());
+                    frac.img.setRGB(x, y, new Color(0, 0, 0).getRGB());
                 } else {
                     int color = Color.HSBtoRGB((float) index / 256, 1, 1);
                     frac.img.setRGB(x, y, color);

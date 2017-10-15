@@ -12,11 +12,15 @@ import fractal.Complex;
  * @author canoso
  */
 public class madelbroth extends Fratal {
+
+    public madelbroth(long itera) {
+        super(itera);
+    }
     @Override
     public int getDivergentIteration(Complex c) {
         Complex z = new Complex(0,0);
         int itera = 0;
-        while (z.distanceToOrigin() < 2 && itera < super.maxIter) {
+        while (z.distanceToOrigin() < 2 && itera < super.getMaxIter()) {
             z = z.times(z).plus(c);
             itera++;
         }

@@ -1,5 +1,6 @@
 package fractal;
 
+import fractal.functions.madelbroth;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,7 +15,7 @@ public class APPFractal extends JPanel {
             @Override
             public void run() {
                 JFrame window = new JFrame("Fractal");
-                FractalImage f = new FractalImage(1360, 780);
+                FractalImage f = new FractalImage(1360, 780, new madelbroth(256));
                 window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 // center window
                 window.setVisible(true);

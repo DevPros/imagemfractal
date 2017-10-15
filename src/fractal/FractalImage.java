@@ -16,14 +16,14 @@ import java.util.logging.Logger;
  *
  * @author canoso
  */
-public class FractalImage extends JComponent implements MouseListener {
+public final class FractalImage extends JComponent implements MouseListener {
 
     BufferedImage img;
     Fratal fractal;
 
     int width;
     int height;
-
+    long iter = 256;
     double centerX = 0;
     double centerY = 0;
     double zoom = 0;
@@ -42,26 +42,26 @@ public class FractalImage extends JComponent implements MouseListener {
     @Override
     public void paintComponent(Graphics gr) {
         gr.drawImage(img, 0, 0, null);
-        
+
     }
 
     public void setFractalFunction(Fratal func) {
         this.fractal = func;
     }
 
-    private void calculateFractal() {
+    public void calculateFractal() {
         // Array de threads com o nº de processadores
         int cores = Runtime.getRuntime().availableProcessors();
         FractalThread[] thr = new FractalThread[cores];
-        
+
         int dim = this.height / cores;
-        
+
         for (int i = 0; i < cores; i++) {
             //thr[i] = new FractalThread(i+dim,(i+1)*dim, this);
-            thr[i] = new FractalThread(dim * i,(i+1)*dim, this);
+            thr[i] = new FractalThread(dim * i, (i + 1) * dim, this);
             thr[i].start();
         }
-        
+
         for (int i = 0; i < cores; i++) {
             try {
                 thr[i].join();
@@ -71,13 +71,21 @@ public class FractalImage extends JComponent implements MouseListener {
         }
     }
 
-    public FractalImage() {
-        this(1920, 1080);
+    public void setIter(int iter) {
+        this.iter = iter;
     }
-
-    public FractalImage(int width, int height) {
-        setFractalFunction(new BurningShip());
+    
+    public FractalImage() {
+        this(800, 600,new madelbroth(256));
+    }
+    public FractalImage(int width, int height, Fratal f) {
+        setFractalFunction(f);
         resizeImg(width, height);
+    }
+    
+
+    public long getIter() {
+        return iter;
     }
 
     @Override
@@ -112,4 +120,7 @@ public class FractalImage extends JComponent implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
     }
+
+    
+
 }

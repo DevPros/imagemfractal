@@ -13,27 +13,19 @@ import fractal.Complex;
  */
 public class BurningShip extends Fratal {
 
+    public BurningShip(long itera) {
+        super(itera);
+    }
+    
     public int getDivergentIteration(Complex c) {
         Complex z = new Complex(0,0);
         int itera = 0;
-        while (z.distanceToOrigin() < 2 && itera < super.maxIter) {
+        while (z.distanceToOrigin() < 2 && itera < super.getMaxIter()) {
             z = z.absC().times(z.absC()).plus(c);
             itera++;
         }
         return itera;
     }
-    /*
-    @Override
-    public int getDivergentIteration(Complex c) {
-        //Complex y = new Complex(2,0);
-        //Complex z = new Complex(0,0);
-
-        int itera = 0;
-        while (z.distanceToOrigin() < 2 && itera < super.maxIter) {
-            z = z.times(y).plus(c);
-            itera++;
-        }
-        return itera;
-    }*/
+    
 
 }
