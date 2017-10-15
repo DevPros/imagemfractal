@@ -12,6 +12,14 @@ import fractal.Complex;
  * @author canoso
  */
 public class madelbroth extends Fratal {
+    
+    public madelbroth() {
+    }
+    
+    public madelbroth(long iter) {
+        super(iter);
+    }
+    
     @Override
     public int getDivergentIteration(Complex c) {
         Complex z = new Complex(0,0);

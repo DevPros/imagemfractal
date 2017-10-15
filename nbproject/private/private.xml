@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/functions/julia.java</file>
-            <file>file:/E:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/FractalImage.java</file>
-            <file>file:/E:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/APPFractal.java</file>
-            <file>file:/E:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/FractalThread.java</file>
+            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/functions/Fratal.java</file>
+            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/threads/Balanced.java</file>
+            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/threads/Parallel.java</file>
+            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/APPFractal.java</file>
+            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/FractalImage.java</file>
+            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/threads/Sequencial.java</file>
         </group>
     </open-files>
 </project-private>
