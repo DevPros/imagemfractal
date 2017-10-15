@@ -11,12 +11,12 @@ import fractal.Complex;
  *
  * @author canoso
  */
-public class madelbroth extends Fratal {
+public class Madelbroth extends FractalFunction {
     
-    public madelbroth() {
+    public Madelbroth() {
     }
     
-    public madelbroth(long iter) {
+    public Madelbroth(long iter) {
         super(iter);
     }
     

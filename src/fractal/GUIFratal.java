@@ -5,20 +5,37 @@
  */
 package fractal;
 
+import fractal.functions.BurningShip;
+import fractal.functions.Madelbroth;
+import java.awt.BorderLayout;
+import static java.lang.Long.parseLong;
+import javax.swing.ButtonGroup;
+
 /**
  *
  * @author Canoso
  */
 public class GUIFratal extends javax.swing.JFrame {
-
+    ButtonGroup bf = new ButtonGroup();
+    FractalImage f = null;
     /**
      * Creates new form GUIFratal
      */
     public GUIFratal() {
         initComponents();
-        fractalImage1 = new fractal.FractalImage();
+        txt_itera.setText("256");
+        f = new FractalImage(800, 600, new Madelbroth(Long.parseLong(txt_itera.getText())));
+        jPanel2.setLayout(new BorderLayout());
+        jPanel2.add(f, BorderLayout.CENTER);
+        jPanel2.setVisible(true);
+        setExtendedState(this.MAXIMIZED_BOTH);
+        selectFactal();
     }
-
+    private void selectFactal(){
+        bf.add(jRadioButton1);
+        bf.add(jRadioButton2);
+        jRadioButton1.setSelected(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,14 +55,12 @@ public class GUIFratal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        bt_appFratal = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txt_itera = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        fractalImage1 = new fractal.FractalImage();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,7 +115,12 @@ public class GUIFratal extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton2.setText("Aplicar");
+        bt_appFratal.setText("Aplicar");
+        bt_appFratal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_appFratalActionPerformed(evt);
+            }
+        });
 
         jRadioButton1.setText("Madelbroth");
 
@@ -112,7 +132,7 @@ public class GUIFratal extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(bt_appFratal)
                 .addGap(31, 31, 31))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
@@ -129,7 +149,7 @@ public class GUIFratal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(bt_appFratal)
                 .addContainerGap())
         );
 
@@ -155,7 +175,7 @@ public class GUIFratal extends javax.swing.JFrame {
                             .addComponent(jSlider2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(83, 83, 83)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_itera, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)))
                 .addGap(125, 125, 125))
@@ -174,30 +194,21 @@ public class GUIFratal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txt_itera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        fractalImage1.setRequestFocusEnabled(false);
-        jScrollPane1.setViewportView(fractalImage1);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 719, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 464, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -221,6 +232,22 @@ public class GUIFratal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void bt_appFratalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_appFratalActionPerformed
+        if (jRadioButton1.isSelected()) {
+            jPanel2.remove(f);
+            f = new FractalImage(800, 600, new Madelbroth(Long.parseLong(txt_itera.getText())));
+        }
+        if (jRadioButton2.isSelected()) {
+            jPanel2.remove(f);
+            f = new FractalImage(800, 600, new BurningShip(Long.parseLong(txt_itera.getText())));
+        }
+        jPanel2.revalidate();
+        jPanel2.repaint();
+        jPanel2.setLayout(new BorderLayout());
+        jPanel2.add(f, BorderLayout.CENTER);
+        jPanel2.setVisible(true);
+    }//GEN-LAST:event_bt_appFratalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,9 +285,8 @@ public class GUIFratal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private fractal.FractalImage fractalImage1;
+    private javax.swing.JButton bt_appFratal;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -270,11 +296,10 @@ public class GUIFratal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txt_itera;
     // End of variables declaration//GEN-END:variables
 }

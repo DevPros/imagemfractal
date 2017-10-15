@@ -1,8 +1,8 @@
 package fractal;
 
 import threads.Parallel;
-import fractal.functions.Fratal;
-import fractal.functions.madelbroth;
+import fractal.functions.FractalFunction;
+import fractal.functions.Madelbroth;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -24,7 +24,7 @@ import threads.TesteParalelo;
 public class FractalImage extends JComponent implements MouseListener {
 
     public BufferedImage img;
-    public Fratal fractal;
+    public FractalFunction fractal;
     
 
     public FractalImage frac;
@@ -42,7 +42,7 @@ public class FractalImage extends JComponent implements MouseListener {
      * Assim é possivel arrastar este elemento para a GUI
      */
     public FractalImage() {
-        this(800, 600);
+        this(800, 600,new Madelbroth());
     }
 
     /**
@@ -50,8 +50,8 @@ public class FractalImage extends JComponent implements MouseListener {
      * @param width largura do fractal
      * @param height altura do fractal
      */
-    public FractalImage(int width, int height) {
-        setFractalFunction(new madelbroth());
+    public FractalImage(int width, int height, FractalFunction f) {
+        setFractalFunction(f);
         resizeImg(width, height);
         //frac = new TesteParalelo(width, height, img, fractal);
     }
@@ -60,7 +60,7 @@ public class FractalImage extends JComponent implements MouseListener {
      * Implementa dinamicamente o algoritmo de exploração dos fractais
      * @param func
      */
-    public void setFractalFunction(Fratal func) {
+    public void setFractalFunction(FractalFunction func) {
         this.fractal = func;
     }
     

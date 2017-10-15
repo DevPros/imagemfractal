@@ -11,13 +11,13 @@ import fractal.Complex;
  *
  * @author canoso
  */
-public abstract class Fratal {
+public abstract class FractalFunction {
     long maxIter = 256; // default was 256
     
-    public Fratal() {
+    public FractalFunction() {
     }
     
-    public Fratal(long iter) {
+    public FractalFunction(long iter) {
         this.maxIter = iter;
     }
     

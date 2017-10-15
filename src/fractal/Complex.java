@@ -133,4 +133,8 @@ public class Complex {
     public double distanceToOrigin() {
         return Math.sqrt(re * re + im * im);
     }
+    
+    public Complex absC(){
+        return new Complex(Math.abs(re),Math.abs(im));
+    }
 }

@@ -7,7 +7,7 @@ package threads;
 
 import fractal.Complex;
 import fractal.FractalImage;
-import fractal.functions.Fratal;
+import fractal.functions.FractalFunction;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
@@ -32,18 +32,18 @@ public class TesteParalelo extends FractalImage implements Runnable {
     private double zoom = 0;
     
     BufferedImage img;
-    private Fratal fractal;
+    private FractalFunction fractal;
 
     
     
-    public TesteParalelo(int width, int height, BufferedImage img, Fratal fractal) {
+    public TesteParalelo(int width, int height, BufferedImage img, FractalFunction fractal) {
         this.width = width;
         this.height = height;
         this.img = img;
         this.fractal = fractal;
     }
     
-    public TesteParalelo(int ini, int fin, int width, int height, BufferedImage img, Fratal fractal) {
+    public TesteParalelo(int ini, int fin, int width, int height, BufferedImage img, FractalFunction fractal) {
         this.ini = ini;
         this.fin = fin;
         this.width = width;
