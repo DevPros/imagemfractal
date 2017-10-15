@@ -8,8 +8,16 @@ package fractal;
 import fractal.functions.BurningShip;
 import fractal.functions.Madelbroth;
 import java.awt.BorderLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import static java.lang.Long.parseLong;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -20,6 +28,9 @@ public class GUIFratal extends javax.swing.JFrame {
     ButtonGroup bf = new ButtonGroup();
     ButtonGroup ba = new ButtonGroup();
     FractalImage f = null;
+    double w = 1366.0;
+    double h = 768.0;
+    double ratio = h / w;
 
     /**
      * Creates new form GUIFratal
@@ -27,7 +38,7 @@ public class GUIFratal extends javax.swing.JFrame {
     public GUIFratal() {
         initComponents();
         txt_itera.setText("256");
-        f = new FractalImage(800, 600, new Madelbroth(Long.parseLong(txt_itera.getText())), 2);
+        f = new FractalImage((int) w, (int) (w * ratio), new Madelbroth(Long.parseLong(txt_itera.getText())), 2);
         jPanel2.setLayout(new BorderLayout());
         jPanel2.add(f, BorderLayout.CENTER);
         jPanel2.setVisible(true);
@@ -35,6 +46,9 @@ public class GUIFratal extends javax.swing.JFrame {
         selectFactal();
     }
 
+    /**
+     * Agrupa os RadioButtons e pré define as selecções
+     */
     private void selectFactal() {
         bf.add(jRadioButton1);
         bf.add(jRadioButton2);
@@ -74,6 +88,8 @@ public class GUIFratal extends javax.swing.JFrame {
         jRadioButton4 = new javax.swing.JRadioButton();
         jRadioButton5 = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        bt_save = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -249,27 +265,55 @@ public class GUIFratal extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 719, Short.MAX_VALUE)
+            .addGap(0, 760, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGap(0, 475, Short.MAX_VALUE)
+        );
+
+        bt_save.setText("Salvar Imagem");
+        bt_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_saveActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bt_save)
+                .addContainerGap(86, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bt_save)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(190, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -284,31 +328,31 @@ public class GUIFratal extends javax.swing.JFrame {
         if (jRadioButton3.isSelected()) {
             if (jRadioButton1.isSelected()) {
                 jPanel2.remove(f);
-                f = new FractalImage(800, 600, new Madelbroth(Long.parseLong(txt_itera.getText())),0);
+                f = new FractalImage((int) w, (int) (w * ratio), new Madelbroth(Long.parseLong(txt_itera.getText())), 0);
             }
             if (jRadioButton2.isSelected()) {
                 jPanel2.remove(f);
-                f = new FractalImage(800, 600, new BurningShip(Long.parseLong(txt_itera.getText())),0);
+                f = new FractalImage((int) w, (int) (w * ratio), new BurningShip(Long.parseLong(txt_itera.getText())), 0);
             }
         }
         if (jRadioButton4.isSelected()) {
             if (jRadioButton1.isSelected()) {
                 jPanel2.remove(f);
-                f = new FractalImage(800, 600, new Madelbroth(Long.parseLong(txt_itera.getText())),1);
+                f = new FractalImage((int) w, (int) (w * ratio), new Madelbroth(Long.parseLong(txt_itera.getText())), 1);
             }
             if (jRadioButton2.isSelected()) {
                 jPanel2.remove(f);
-                f = new FractalImage(800, 600, new BurningShip(Long.parseLong(txt_itera.getText())),1);
+                f = new FractalImage((int) w, (int) (w * ratio), new BurningShip(Long.parseLong(txt_itera.getText())), 1);
             }
         }
         if (jRadioButton5.isSelected()) {
             if (jRadioButton1.isSelected()) {
                 jPanel2.remove(f);
-                f = new FractalImage(800, 600, new Madelbroth(Long.parseLong(txt_itera.getText())),2);
+                f = new FractalImage((int) w, (int) (w * ratio), new Madelbroth(Long.parseLong(txt_itera.getText())), 2);
             }
             if (jRadioButton2.isSelected()) {
                 jPanel2.remove(f);
-                f = new FractalImage(800, 600, new BurningShip(Long.parseLong(txt_itera.getText())),2);
+                f = new FractalImage((int) w, (int) (w * ratio), new BurningShip(Long.parseLong(txt_itera.getText())), 2);
             }
         }
         jPanel2.revalidate();
@@ -317,6 +361,23 @@ public class GUIFratal extends javax.swing.JFrame {
         jPanel2.add(f, BorderLayout.CENTER);
         jPanel2.setVisible(true);
     }//GEN-LAST:event_bt_appFratalActionPerformed
+
+    private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
+        BufferedImage bi = new BufferedImage(f.getWidth(), f.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "png");
+        JFileChooser c = new JFileChooser();
+        c.setFileFilter(filter);
+        int rVal = c.showSaveDialog(this);
+        File file = c.getSelectedFile();
+        if (rVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                f.paint(bi.getGraphics());
+                ImageIO.write(bi, "png", new File(file.getAbsoluteFile() + ".png"));
+            } catch (IOException ex) {
+                Logger.getLogger(GUIFratal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_bt_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,7 +390,7 @@ public class GUIFratal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -355,6 +416,7 @@ public class GUIFratal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_appFratal;
+    private javax.swing.JButton bt_save;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -364,6 +426,7 @@ public class GUIFratal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
