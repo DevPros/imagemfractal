@@ -25,7 +25,6 @@ public class FractalImage extends JComponent implements MouseListener {
 
     public BufferedImage img;
     public FractalFunction fractal;
-    
 
     public FractalImage frac;
 
@@ -35,37 +34,38 @@ public class FractalImage extends JComponent implements MouseListener {
     public double centerX = 0;
     public double centerY = 0;
     public double zoom = 0;
-    
+
     float Saturation = 1f;
+
     /**
-     * Construtor por defeito
-     * Assim é possivel arrastar este elemento para a GUI
+     * Construtor por defeito Assim é possivel arrastar este elemento para a GUI
      */
     public FractalImage() {
-        this(800, 600,new Madelbroth());
+        this(800, 600, new Madelbroth(), 1);
     }
 
     /**
      * Construtor com parametros de largura e altura
+     *
      * @param width largura do fractal
      * @param height altura do fractal
      */
-    public FractalImage(int width, int height, FractalFunction f) {
+    public FractalImage(int width, int height, FractalFunction f, int alg) {
         setFractalFunction(f);
-        resizeImg(width, height);
+        resizeImg(width, height, alg);
         //frac = new TesteParalelo(width, height, img, fractal);
     }
-    
+
     /**
      * Implementa dinamicamente o algoritmo de exploração dos fractais
+     *
      * @param func
      */
     public void setFractalFunction(FractalFunction func) {
         this.fractal = func;
     }
-    
-    
-    public void resizeImg(int width, int height) {
+
+    public void resizeImg(int width, int height, int alg) {
         this.width = width;
         this.height = height;
 
@@ -73,8 +73,22 @@ public class FractalImage extends JComponent implements MouseListener {
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
         this.addMouseListener(this);
         zoom = (4.00 / width) * 2;
+        switch (alg) {
+            case 0:
+                calculateFractalSequential();
+                break;
+            case 1:
+                calculateFractalParallel();
+                break;
+            case 2:
+                calculateFractalBalanced();
+                break;
+            default:
+                calculateFractalBalanced();
+                break;
+        }
         //calculateFractalSequential();
-        calculateFractalParallel();
+        //calculateFractalParallel();
         //calculateFractalBalanced();
     }
 
@@ -83,51 +97,51 @@ public class FractalImage extends JComponent implements MouseListener {
         //gr.drawImage(img, 0, 0, null);
         gr.drawImage(img, 0, 0, getWidth(), getHeight(), this);
     }
-    
-    private void calculateFractalSequential(){
+
+    private void calculateFractalSequential() {
         long startTime;
         long endTime;
         startTime = System.currentTimeMillis();
-        
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
                 double reY = frac.centerY - (y - frac.height / 2) * frac.zoom;
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
-                
-                float Hue = (index%256)/255.0f;
+
+                float Hue = (index % 256) / 255.0f;
                 float Brightness = index < 256 ? 1f : 0;
-                
+
                 Color color = Color.getHSBColor(Hue, Saturation, Brightness);
                 frac.img.setRGB(x, y, color.getRGB());
             }
         }
-        
+
         endTime = System.currentTimeMillis();
-        
-        System.out.println("Tempo sequencial: " + (endTime - startTime) );
+
+        System.out.println("Tempo sequencial: " + (endTime - startTime));
     }
 
     private void calculateFractalParallel() {
-        
+
         long startTime;
         long endTime;
         startTime = System.currentTimeMillis();
-        
+
         // Array de threads com o nº de processadores
         int cores = Runtime.getRuntime().availableProcessors();
         Parallel[] thr = new Parallel[cores];
-        
+
         // dimensao do intervalo
         int dim = this.height / cores;
-        
+
         for (int i = 0; i < thr.length; i++) {
             // criar as threads com os limites
-            thr[i] = new Parallel(dim * i, (i+1)*dim, this);
+            thr[i] = new Parallel(dim * i, (i + 1) * dim, this);
             // executar as threads
             thr[i].start();
         }
-        
+
         // Esperar que todas as threads terminem
         for (int i = 0; i < thr.length; i++) {
             try {
@@ -136,32 +150,32 @@ public class FractalImage extends JComponent implements MouseListener {
                 Logger.getLogger(FractalImage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         endTime = System.currentTimeMillis();
-        
-        System.out.println("Tempo Paralelo: " + (endTime - startTime) );
+
+        System.out.println("Tempo Paralelo: " + (endTime - startTime));
     }
-    
+
     private void calculateFractalBalanced() {
         long startTime;
         long endTime;
         startTime = System.currentTimeMillis();
-       
+
         // Array de threads com o nº de processadores
         int cores = Runtime.getRuntime().availableProcessors();
         Balanced[] thr = new Balanced[cores];
-        
+
         // senhas para os termos dos intervalos
         //AtomicInteger ticket = new AtomicInteger(256); /599
-        AtomicInteger ticket = new AtomicInteger(this.height-1); //2160
-        
+        AtomicInteger ticket = new AtomicInteger(this.height - 1); //2160
+
         for (int i = 0; i < thr.length; i++) {
             // atribuir a cada thread um conjunto de iterações
             thr[i] = new Balanced(ticket, this);
             // executar as threads
             thr[i].start();
         }
-        
+
         // Esperar que as threads concluam o trabalho
         for (int i = 0; i < thr.length; i++) {
             try {
@@ -170,14 +184,12 @@ public class FractalImage extends JComponent implements MouseListener {
                 Logger.getLogger(FractalImage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         endTime = System.currentTimeMillis();
-        
-        System.out.println("Tempo balanceado: " + (endTime - startTime) );
+
+        System.out.println("Tempo balanceado: " + (endTime - startTime));
     }
-    
-    
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
@@ -196,8 +208,6 @@ public class FractalImage extends JComponent implements MouseListener {
         }
         repaint();
     }
-    
-    
 
     @Override
     public void mousePressed(MouseEvent e) {
