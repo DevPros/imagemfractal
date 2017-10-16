@@ -13,7 +13,7 @@ public class APPFractal extends JPanel {
     public static void main(String[] args) {
 
         JFrame window = new JFrame("Fractal");
-        FractalImage f = new FractalImage(3840, 2160,new Madelbroth(),2);
+        FractalImage f = new FractalImage(3840, 2160,new Madelbroth(),0);
         //FractalImage f = new FractalImage(800, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //

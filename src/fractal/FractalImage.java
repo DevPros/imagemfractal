@@ -14,8 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import threads.Balanced;
-import threads.Sequential;
-import threads.TesteParalelo;
 
 /**
  *
@@ -40,7 +38,8 @@ public class FractalImage extends JComponent implements MouseListener {
     float Saturation = 1f;
 
     /**
-     * Construtor por defeito Assim é possivel arrastar este elemento para a GUI
+     * Construtor por defeito 
+     * Assim é possivel arrastar este elemento para a GUI
      */
     public FractalImage() {
         this(800, 600, new Madelbroth(), 1);
@@ -56,7 +55,6 @@ public class FractalImage extends JComponent implements MouseListener {
         setFractalFunction(f);
         setAlg(alg);
         resizeImg(width, height);
-        //frac = new TesteParalelo(width, height, img, fractal);
     }
 
     public int getAlg() {
@@ -70,7 +68,7 @@ public class FractalImage extends JComponent implements MouseListener {
     /**
      * Implementa dinamicamente o algoritmo de exploração dos fractais
      *
-     * @param func
+     * @param func - Algoritmo
      */
     public void setFractalFunction(FractalFunction func) {
         this.fractal = func;
@@ -117,15 +115,15 @@ public class FractalImage extends JComponent implements MouseListener {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
-                double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
-                int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
+                double reX = centerX + (x - width / 2) * zoom;
+                double reY = centerY + (y - height / 2) * zoom;
+                int index = fractal.getDivergentIteration(new Complex(reX, reY));
 
                 float Hue = (index % 256) / 255.0f;
                 float Brightness = index < 256 ? 1f : 0;
 
                 Color color = Color.getHSBColor(Hue, Saturation, Brightness);
-                frac.img.setRGB(x, y, color.getRGB());
+                img.setRGB(x, y, color.getRGB());
             }
         }
 
