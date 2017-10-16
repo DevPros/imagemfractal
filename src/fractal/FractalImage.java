@@ -30,6 +30,8 @@ public class FractalImage extends JComponent implements MouseListener {
 
     public int width;
     public int height;
+    
+    public int alg;
 
     public double centerX = 0;
     public double centerY = 0;
@@ -52,8 +54,17 @@ public class FractalImage extends JComponent implements MouseListener {
      */
     public FractalImage(int width, int height, FractalFunction f, int alg) {
         setFractalFunction(f);
-        resizeImg(width, height, alg);
+        setAlg(alg);
+        resizeImg(width, height);
         //frac = new TesteParalelo(width, height, img, fractal);
+    }
+
+    public int getAlg() {
+        return alg;
+    }
+
+    public void setAlg(int alg) {
+        this.alg = alg;
     }
 
     /**
@@ -65,7 +76,7 @@ public class FractalImage extends JComponent implements MouseListener {
         this.fractal = func;
     }
 
-    public void resizeImg(int width, int height, int alg) {
+    public void resizeImg(int width, int height) {
         this.width = width;
         this.height = height;
 
@@ -73,7 +84,11 @@ public class FractalImage extends JComponent implements MouseListener {
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
         this.addMouseListener(this);
         zoom = (4.00 / width) * 2;
-        switch (alg) {
+        algo(getAlg());
+    }
+
+    public void algo(int i) {
+        switch (i) {
             case 0:
                 calculateFractalSequential();
                 break;
@@ -87,9 +102,6 @@ public class FractalImage extends JComponent implements MouseListener {
                 calculateFractalBalanced();
                 break;
         }
-        //calculateFractalSequential();
-        //calculateFractalParallel();
-        //calculateFractalBalanced();
     }
 
     @Override
@@ -106,7 +118,7 @@ public class FractalImage extends JComponent implements MouseListener {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
-                double reY = frac.centerY - (y - frac.height / 2) * frac.zoom;
+                double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
 
                 float Hue = (index % 256) / 255.0f;
@@ -190,22 +202,16 @@ public class FractalImage extends JComponent implements MouseListener {
         System.out.println("Tempo balanceado: " + (endTime - startTime));
     }
 
-    @Override
     public void mouseClicked(MouseEvent e) {
+        centerX = centerX + (e.getX() - width / 2) * zoom;
+        centerY = centerY - (e.getY() - height / 2) * zoom;
         if (e.getButton() == MouseEvent.BUTTON1) {
-            centerX = centerX + (e.getX() - width / 2) * zoom;
-            centerY = centerY - (e.getY() - height / 2) * zoom;
             zoom *= 1.2;
-            //calculateFractalParallel();
-            //calculateFractalBalanced();
         }
         if (e.getButton() == MouseEvent.BUTTON3) {
-            centerX = centerX + (e.getX() - width / 2) * zoom;
-            centerY = centerY - (e.getY() - height / 2) * zoom;
             zoom /= 1.2;
-            //calculateFractalParallel();
-            //calculateFractalBalanced();
         }
+        algo(getAlg());
         repaint();
     }
 

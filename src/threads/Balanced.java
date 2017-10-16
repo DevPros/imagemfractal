@@ -33,7 +33,7 @@ public class Balanced extends Thread{
 
             for (int x = 0; x < frac.width; x++) {
                 double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
-                double reY = frac.centerY - (y - frac.height / 2) * frac.zoom;
+                double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
                 
                 float Hue = (index%256)/255.0f;
