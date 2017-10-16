@@ -21,7 +21,7 @@ import threads.TesteParalelo;
  *
  * @author canoso
  */
-public class FractalImage extends JComponent implements MouseListener {
+public final class FractalImage extends JComponent implements MouseListener {
 
     public BufferedImage img;
     public FractalFunction fractal;
@@ -30,20 +30,21 @@ public class FractalImage extends JComponent implements MouseListener {
 
     public int width;
     public int height;
-    
+
     public int alg;
 
     public double centerX = 0;
     public double centerY = 0;
     public double zoom = 0;
 
-    float Saturation = 1f;
+    static float Saturation = 1f;
+    static float Brightness = 1f;
 
     /**
      * Construtor por defeito Assim é possivel arrastar este elemento para a GUI
      */
     public FractalImage() {
-        this(800, 600, new Madelbroth(), 1);
+        this(800, 600, new Madelbroth(), 1, Saturation, Brightness);
     }
 
     /**
@@ -51,12 +52,35 @@ public class FractalImage extends JComponent implements MouseListener {
      *
      * @param width largura do fractal
      * @param height altura do fractal
+     * @param f
+     * @param alg
+     * @param saturation
+     * @param brightness
      */
-    public FractalImage(int width, int height, FractalFunction f, int alg) {
+    public FractalImage(int width, int height, FractalFunction f, int alg, float saturation, float brightness) {
         setFractalFunction(f);
         setAlg(alg);
         resizeImg(width, height);
+        this.Saturation = saturation / 255f;
+        this.Brightness = brightness / 255f;
+        System.out.println(this.Saturation + " " + this.Brightness);
         //frac = new TesteParalelo(width, height, img, fractal);
+    }
+
+    public float getSaturation() {
+        return Saturation;
+    }
+
+    public void setSaturation(float Saturation) {
+        this.Saturation = Saturation;
+    }
+
+    public float getBrightness() {
+        return Brightness;
+    }
+
+    public void setBrightness(float Brightness) {
+        this.Brightness = Brightness;
     }
 
     public int getAlg() {
@@ -183,7 +207,7 @@ public class FractalImage extends JComponent implements MouseListener {
 
         for (int i = 0; i < thr.length; i++) {
             // atribuir a cada thread um conjunto de iterações
-            thr[i] = new Balanced(ticket, this);
+            thr[i] = new Balanced(ticket, this, getSaturation(), getBrightness());
             // executar as threads
             thr[i].start();
         }

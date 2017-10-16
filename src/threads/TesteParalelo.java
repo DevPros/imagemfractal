@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Canoso
  */
-public class TesteParalelo extends FractalImage implements Runnable {
+public class TesteParalelo /*extends FractalImage implements Runnable */{
 
     float Saturation = 1f;
     
@@ -52,8 +52,7 @@ public class TesteParalelo extends FractalImage implements Runnable {
         this.fractal = fractal;
     }
 
-    
-    @Override
+
     public void run() {
 //    for (int y = 0; y < height; y++) {
 //            for (int x = 0; x < width; x++) {
@@ -86,7 +85,7 @@ public class TesteParalelo extends FractalImage implements Runnable {
         
         for (int i = 0; i < thr.length; i++) {
             // criar as threads com os limites
-            thr[i] = new Thread(new TesteParalelo(dim * i, (i+1)*dim, width, height, img, fractal));
+            //thr[i] = new Thread(new TesteParalelo(dim * i, (i+1)*dim, width, height, img, fractal));
             // executar as threads
             thr[i].start();
         }
