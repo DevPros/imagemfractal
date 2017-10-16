@@ -204,7 +204,7 @@ public class FractalImage extends JComponent implements MouseListener {
 
     public void mouseClicked(MouseEvent e) {
         centerX = centerX + (e.getX() - width / 2) * zoom;
-        centerY = centerY - (e.getY() - height / 2) * zoom;
+        centerY = centerY + (e.getY() - height / 2) * zoom;
         if (e.getButton() == MouseEvent.BUTTON1) {
             zoom *= 1.2;
         }
