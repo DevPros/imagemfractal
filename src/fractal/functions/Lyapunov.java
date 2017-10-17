@@ -37,5 +37,5 @@ public class Lyapunov extends FractalFunction {
         return (int) sum;
     }
     
-
 }
+
