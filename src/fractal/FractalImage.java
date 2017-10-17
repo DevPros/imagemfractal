@@ -13,6 +13,8 @@ import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JProgressBar;
+import javax.swing.text.JTextComponent;
 import threads.Balanced;
 
 /**
@@ -24,8 +26,8 @@ public final class FractalImage extends JComponent implements MouseListener {
     public BufferedImage img;
     public FractalFunction fractal;
 
-    public FractalImage frac;
-
+    FractalCalculus calculus;
+    
     public int width;
     public int height;
 
@@ -45,7 +47,7 @@ public final class FractalImage extends JComponent implements MouseListener {
     public FractalImage() {
         this(800, 600, new Madelbroth(), 1, Saturation, Brightness);
     }
-
+    
     /**
      * Construtor com parametros de largura e altura
      *
@@ -108,7 +110,15 @@ public final class FractalImage extends JComponent implements MouseListener {
         zoom = (4.00 / width) * 2;
         algo(getAlg());
     }
-
+    public void setCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
+        calculus.calculate();
+    }
+    public void stopCalculateFractalGUI(){
+        calculus.stop();
+    }
+    public void initCalculateFractalGUI(){
+        
+    }
     public void algo(int i) {
         switch (i) {
             case 0:
@@ -146,6 +156,7 @@ public final class FractalImage extends JComponent implements MouseListener {
                 img.setRGB(x, y, color.getRGB());
             }
         }
+        repaint();
     }
 
     private void calculateFractalParallel() {

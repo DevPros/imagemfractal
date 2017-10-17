@@ -35,8 +35,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
           </Group>
@@ -67,6 +67,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="pbar" max="32767" attributes="0"/>
                       <Component id="jPanel3" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="bt_save" min="-2" max="-2" attributes="0"/>
@@ -100,8 +101,12 @@
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jSecTemp" min="-2" pref="165" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -134,7 +139,11 @@
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="46" max="32767" attributes="0"/>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <Component id="jSecTemp" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="pbar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="bt_save" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="bt_appFratal" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -377,17 +386,11 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sequencial"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton3ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButton4">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Paralelo"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton4ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="jRadioButton5">
               <Properties>
@@ -540,6 +543,10 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel13"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JProgressBar" name="pbar">
+        </Component>
+        <Component class="javax.swing.JTextField" name="jSecTemp">
         </Component>
       </SubComponents>
     </Container>
