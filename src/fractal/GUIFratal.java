@@ -488,7 +488,10 @@ public class GUIFratal extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void bt_appFratalActionPerformed(java.awt.event.ActionEvent evt) {                                             
-
+        /**
+         * Selecionar o algoritmo
+         */
+        
         if (jRadioButton3.isSelected()) {
             if (jRadioButton1.isSelected()) {
                 jPanel2.remove(f);
