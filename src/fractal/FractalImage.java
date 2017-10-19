@@ -1,21 +1,17 @@
 package fractal;
 
-import threads.Parallel;
 import fractal.functions.FractalFunction;
 import fractal.functions.Madelbroth;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import java.awt.Dimension;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
-import threads.Balanced;
+import threads.FractalCalculus;
+import threads.*;
 
 /**
  *
@@ -26,7 +22,7 @@ public final class FractalImage extends JComponent implements MouseListener {
     public BufferedImage img;
     public FractalFunction fractal;
 
-    FractalCalculus calculus;
+    public FractalCalculus calculus;
     
     public int width;
     public int height;
@@ -60,7 +56,7 @@ public final class FractalImage extends JComponent implements MouseListener {
      */
     public FractalImage(int width, int height, FractalFunction f, int alg, float saturation, float brightness) {
         setFractalFunction(f);
-        setAlg(alg);
+        //setAlg(alg);
         resizeImg(width, height);
         this.Saturation = saturation / 255f;
         this.Brightness = brightness / 255f;
@@ -119,7 +115,7 @@ public final class FractalImage extends JComponent implements MouseListener {
     public void stopCalculateFractalGUI(){
         calculus.stop();
     }
-    
+    /*
     public void algo(int i) {
         switch (i) {
             case 0:
@@ -135,14 +131,14 @@ public final class FractalImage extends JComponent implements MouseListener {
                 calculateFractalBalanced();
                 break;
         }
-    }
+    } */
 
     @Override
     public void paintComponent(Graphics gr) {
         //gr.drawImage(img, 0, 0, null);
         gr.drawImage(img, 0, 0, getWidth(), getHeight(), this);
     }
-
+    /*
     private void calculateFractalSequential() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -212,7 +208,7 @@ public final class FractalImage extends JComponent implements MouseListener {
                 Logger.getLogger(FractalImage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+    } */
 
     public void mouseClicked(MouseEvent e) {
         centerX = centerX + (e.getX() - width / 2) * zoom;
@@ -223,7 +219,7 @@ public final class FractalImage extends JComponent implements MouseListener {
         if (e.getButton() == MouseEvent.BUTTON3) {
             zoom /= 1.2;
         }
-        algo(getAlg());
+        //algo(getAlg());
         repaint();
     }
 
