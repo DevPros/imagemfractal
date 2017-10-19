@@ -33,10 +33,13 @@ public class FractalSequential extends FractalCalculus implements Runnable {
      */
     @Override
     public void calculate() {
-        if (singleThread.isAlive() || singleThread == null) {
-            stop();
+        if (singleThread != null) {
+            System.out.println(singleThread.isAlive());
+            if (singleThread.isAlive()) {
+                stop();
+            }
         }
-        singleThread = new Thread();
+        singleThread = new Thread(this);
         singleThread.start();
     }
 
@@ -56,24 +59,24 @@ public class FractalSequential extends FractalCalculus implements Runnable {
     @Override
     public void run() {
         pb.setMaximum(frac.height);
+        txt.setText("A Calcular....");
         time = System.currentTimeMillis();
         for (int y = 0; y < frac.height; y++) {
+            pb.setValue(y);
             for (int x = 0; x < frac.width; x++) {
-                pb.setValue(y);
                 double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
                 double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
 
                 float Hue = (index % 256) / 255.0f;
                 //float Brightness = index < 256 ? 1f : 0;
-
                 Color color = Color.getHSBColor(Hue, frac.getSaturation(), frac.getBrightness());
                 frac.img.setRGB(x, y, color.getRGB());
             }
             frac.repaint();
         }
         time = System.currentTimeMillis() - time;
-        txt.setText(time+"");
+        txt.setText(time + "");
     }
 
 }
