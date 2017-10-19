@@ -111,6 +111,9 @@ public final class FractalImage extends JComponent implements MouseListener {
     public void parCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
         calculus = new Parallel(pb, txt, this);
     }
+    public void balCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
+        calculus = new Balanced(pb, txt, this);
+    }
     public void initCalculateFractalGUI(){
         calculus.calculate();
     }

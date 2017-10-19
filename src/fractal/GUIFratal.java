@@ -532,12 +532,17 @@ public class GUIFratal extends javax.swing.JFrame {
                 jPanel2.remove(f);
                 sT3 = System.currentTimeMillis();
                 f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new Madelbroth(Long.parseLong(txt_itera.getText())), 2, (float) jSlider1.getValue(), (float) jSlider2.getValue());
+                f.balCalculateFractalGUI(pbar, jSecTemp);
+                f.initCalculateFractalGUI();
                 eT3 = System.currentTimeMillis();
             }
             if (jRadioButton2.isSelected()) {
                 jPanel2.remove(f);
                 sT3 = System.currentTimeMillis();
                 f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new BurningShip(Long.parseLong(txt_itera.getText())), 2, (float) jSlider1.getValue(), (float) jSlider2.getValue());
+                f.balCalculateFractalGUI(pbar, jSecTemp);
+                f.initCalculateFractalGUI();
+                
                 eT3 = System.currentTimeMillis();
             }
         }
