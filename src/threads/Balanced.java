@@ -9,46 +9,25 @@ import fractal.Complex;
 import fractal.FractalImage;
 import java.awt.Color;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.swing.JProgressBar;
+import javax.swing.text.JTextComponent;
 
 /**
  *
  * @author Canoso
  */
-public class Balanced extends Thread {
+public class Balanced extends FractalCalculus {
 
     AtomicInteger ticket;
-    FractalImage frac;
     int y;
-    // teste
-    float Brightness = 1f;
-    float Saturation = 1f;
-
-    public Balanced(AtomicInteger ticket, FractalImage fractal, float brightness, float saturation) {
-        this.ticket = ticket;
-        this.frac = fractal;
-        this.Brightness = brightness;
-        this.Saturation = saturation;
+    FractalThread[] thr;
+    public Balanced(JProgressBar pb, JTextComponent txt, FractalImage frac) {
+        super(pb, txt, frac);
     }
-
-    public float getBrightness() {
-        return Brightness;
-    }
-
-    public void setBrightness(float Brightness) {
-        this.Brightness = Brightness;
-    }
-
-    public float getSaturation() {
-        return Saturation;
-    }
-
-    public void setSaturation(float Saturation) {
-        this.Saturation = Saturation;
-    }
-    
 
     @Override
-    public void run() {
+    public void calculate() {
+        ticket = new AtomicInteger(frac.height - 1);
         while ((y = ticket.getAndDecrement()) >= 0) {
 
             for (int x = 0; x < frac.width; x++) {
@@ -61,10 +40,21 @@ public class Balanced extends Thread {
 
                 //int color = Color.HSBtoRGB((float)(index/256.0), 1, 1);
                 //System.out.println("x:"+x +" "+ "y:"+y);
-                Color color = Color.getHSBColor(Hue,  getSaturation(), getBrightness());
+                Color color = Color.getHSBColor(Hue,  frac.getSaturation(), frac.getBrightness());
                 frac.img.setRGB(x, y, color.getRGB());
             }
+        frac.repaint();
+        }
+    }
 
+    @Override
+    public void stop() {
+        if (thr != null){
+            if (thr[0].isAlive()){
+                for(FractalThread fractalThread : thr){
+                    fractalThread.interrupt();
+                }
+            }
         }
     }
 }

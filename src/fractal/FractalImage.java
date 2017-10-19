@@ -1,19 +1,17 @@
 package fractal;
 
-import threads.Parallel;
 import fractal.functions.FractalFunction;
 import fractal.functions.Madelbroth;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import java.awt.Dimension;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import threads.Balanced;
+import javax.swing.JProgressBar;
+import javax.swing.text.JTextComponent;
+import threads.FractalCalculus;
+import threads.*;
 
 /**
  *
@@ -24,8 +22,8 @@ public final class FractalImage extends JComponent implements MouseListener {
     public BufferedImage img;
     public FractalFunction fractal;
 
-    public FractalImage frac;
-
+    public FractalCalculus calculus;
+    
     public int width;
     public int height;
 
@@ -45,7 +43,7 @@ public final class FractalImage extends JComponent implements MouseListener {
     public FractalImage() {
         this(800, 600, new Madelbroth(), 1, Saturation, Brightness);
     }
-
+    
     /**
      * Construtor com parametros de largura e altura
      *
@@ -58,7 +56,7 @@ public final class FractalImage extends JComponent implements MouseListener {
      */
     public FractalImage(int width, int height, FractalFunction f, int alg, float saturation, float brightness) {
         setFractalFunction(f);
-        setAlg(alg);
+        //setAlg(alg);
         resizeImg(width, height);
         this.Saturation = saturation / 255f;
         this.Brightness = brightness / 255f;
@@ -106,9 +104,23 @@ public final class FractalImage extends JComponent implements MouseListener {
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
         this.addMouseListener(this);
         zoom = (4.00 / width) * 2;
-        algo(getAlg());
     }
-
+    public void seqCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
+        calculus = new FractalSequential(pb, txt, this);
+    }
+    public void parCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
+        calculus = new Parallel(pb, txt, this);
+    }
+    public void balCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
+        calculus = new Balanced(pb, txt, this);
+    }
+    public void initCalculateFractalGUI(){
+        calculus.calculate();
+    }
+    public void stopCalculateFractalGUI(){
+        calculus.stop();
+    }
+    /*
     public void algo(int i) {
         switch (i) {
             case 0:
@@ -124,14 +136,14 @@ public final class FractalImage extends JComponent implements MouseListener {
                 calculateFractalBalanced();
                 break;
         }
-    }
+    } */
 
     @Override
     public void paintComponent(Graphics gr) {
         //gr.drawImage(img, 0, 0, null);
         gr.drawImage(img, 0, 0, getWidth(), getHeight(), this);
     }
-
+    /*
     private void calculateFractalSequential() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -145,7 +157,9 @@ public final class FractalImage extends JComponent implements MouseListener {
                 Color color = Color.getHSBColor(Hue, getSaturation(), getBrightness());
                 img.setRGB(x, y, color.getRGB());
             }
+            this.repaint();
         }
+        
     }
 
     private void calculateFractalParallel() {
@@ -199,7 +213,7 @@ public final class FractalImage extends JComponent implements MouseListener {
                 Logger.getLogger(FractalImage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+    } */
 
     public void mouseClicked(MouseEvent e) {
         centerX = centerX + (e.getX() - width / 2) * zoom;
@@ -210,7 +224,7 @@ public final class FractalImage extends JComponent implements MouseListener {
         if (e.getButton() == MouseEvent.BUTTON3) {
             zoom /= 1.2;
         }
-        algo(getAlg());
+        //algo(getAlg());
         repaint();
     }
 
