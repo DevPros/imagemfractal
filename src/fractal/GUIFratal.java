@@ -42,7 +42,7 @@ public class GUIFratal extends javax.swing.JFrame {
         initComponents();
         txt_itera.setText("256");
         f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new Madelbroth(Long.parseLong(txt_itera.getText())), 2, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-        f.setCalculateFractalGUI(pbar, jSecTemp);
+        f.seqCalculateFractalGUI(pbar, jSecTemp);
         f.initCalculateFractalGUI();
         f.repaint();
         jPanel2.setLayout(new BorderLayout());
@@ -494,7 +494,7 @@ public class GUIFratal extends javax.swing.JFrame {
                 jPanel2.remove(f);
                 sT1 = System.currentTimeMillis();
                 f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new Madelbroth(Long.parseLong(txt_itera.getText())), 0, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-                f.setCalculateFractalGUI(pbar, jSecTemp);
+                f.seqCalculateFractalGUI(pbar, jSecTemp);
                 f.initCalculateFractalGUI();
                 eT1 = System.currentTimeMillis();
             }
@@ -502,7 +502,7 @@ public class GUIFratal extends javax.swing.JFrame {
                 jPanel2.remove(f);
                 sT1 = System.currentTimeMillis();
                 f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new BurningShip(Long.parseLong(txt_itera.getText())), 0, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-                f.setCalculateFractalGUI(pbar, jSecTemp);
+                f.seqCalculateFractalGUI(pbar, jSecTemp);
                 f.initCalculateFractalGUI();
                 eT1 = System.currentTimeMillis();
             }
@@ -513,13 +513,16 @@ public class GUIFratal extends javax.swing.JFrame {
                 jPanel2.remove(f);
                 sT2 = System.currentTimeMillis();
                 f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new Madelbroth(Long.parseLong(txt_itera.getText())), 1, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-
+                f.parCalculateFractalGUI(pbar, jSecTemp);
+                f.initCalculateFractalGUI();
                 eT2 = System.currentTimeMillis();
             }
             if (jRadioButton2.isSelected()) {
                 jPanel2.remove(f);
                 sT2 = System.currentTimeMillis();
                 f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new BurningShip(Long.parseLong(txt_itera.getText())), 1, (float) jSlider1.getValue(), (float) jSlider2.getValue());
+                f.parCalculateFractalGUI(pbar, jSecTemp);
+                f.initCalculateFractalGUI();
                 eT2 = System.currentTimeMillis();
             }
         }

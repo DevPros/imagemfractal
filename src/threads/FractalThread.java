@@ -28,17 +28,19 @@ public class FractalThread extends Thread{
     @Override
     public void run(){
         time = System.currentTimeMillis();
+        
         for (int y = ini; y < fin; y++){
-            for (int x = 0; x < 10; x++) {
-                 double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
+            for (int x = 0; x < frac.width; x++) {
+                double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
                 double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
                 float Hue = (index%256)/255.0f;
                 Color color = Color.getHSBColor(Hue, 1, 1);
                 frac.img.setRGB(x, y, color.getRGB());
-            }
+            }  
             frac.repaint();
         }
+        
         time = System.currentTimeMillis() - time;
     }
     

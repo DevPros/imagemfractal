@@ -104,10 +104,12 @@ public final class FractalImage extends JComponent implements MouseListener {
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
         this.addMouseListener(this);
         zoom = (4.00 / width) * 2;
-        //algo(getAlg());
     }
-    public void setCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
+    public void seqCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
         calculus = new FractalSequential(pb, txt, this);
+    }
+    public void parCalculateFractalGUI(JProgressBar pb, JTextComponent txt){
+        calculus = new Parallel(pb, txt, this);
     }
     public void initCalculateFractalGUI(){
         calculus.calculate();
