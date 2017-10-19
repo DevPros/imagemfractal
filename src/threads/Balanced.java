@@ -9,6 +9,8 @@ import fractal.Complex;
 import fractal.FractalImage;
 import java.awt.Color;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
@@ -21,40 +23,52 @@ public class Balanced extends FractalCalculus {
     AtomicInteger ticket;
     int y;
     FractalThread[] thr;
+    
     public Balanced(JProgressBar pb, JTextComponent txt, FractalImage frac) {
         super(pb, txt, frac);
     }
 
     @Override
     public void calculate() {
-        ticket = new AtomicInteger(frac.height - 1);
-        while ((y = ticket.getAndDecrement()) >= 0) {
-
-            for (int x = 0; x < frac.width; x++) {
-                double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
-                double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
-                int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
-
-                float Hue = (index % 256) / 255.0f;
-                //float Brightness = index < 256 ? 1f : 0;
-
-                //int color = Color.HSBtoRGB((float)(index/256.0), 1, 1);
-                //System.out.println("x:"+x +" "+ "y:"+y);
-                Color color = Color.getHSBColor(Hue,  frac.getSaturation(), frac.getBrightness());
-                frac.img.setRGB(x, y, color.getRGB());
-            }
-        frac.repaint();
+        if (thr != null && thr[0].isAlive()){
+            stop();
         }
+        
+        // Array de threads com o nº de processadores
+        int cores = Runtime.getRuntime().availableProcessors();
+        FractalThreadBal[] thr = new FractalThreadBal[cores];
+        
+        // senhas para os termos dos intervalos
+        //AtomicInteger ticket = new AtomicInteger(256); /599
+        ticket = new AtomicInteger(frac.height - 1); //2160
+        
+        for (int i = 0; i < thr.length; i++) {
+            // atribuir a cada thread um conjunto de iterações
+            thr[i] = new FractalThreadBal(ticket, frac);
+            // executar as threads
+            thr[i].start();
+        }
+        
+        // Esperar que as threads concluam o trabalho
+        for (int i = 0; i < thr.length; i++) {
+            try {
+                thr[i].join();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FractalImage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
     }
 
     @Override
     public void stop() {
         if (thr != null){
-            if (thr[0].isAlive()){
+            //if (thr[0].isAlive()){
                 for(FractalThread fractalThread : thr){
                     fractalThread.interrupt();
                 }
-            }
+            //}
         }
     }
 }

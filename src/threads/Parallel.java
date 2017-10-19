@@ -60,11 +60,11 @@ public class Parallel extends FractalCalculus{
     @Override
     public void stop() {
         if (thr != null){
-            if (thr[0].isAlive()){
+            //if (thr[0].isAlive()){
                 for(FractalThread fractalThread : thr){
                     fractalThread.interrupt();
                 }
-            }
+            //}
         }
     }
 }
