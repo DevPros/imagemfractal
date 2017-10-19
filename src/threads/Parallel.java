@@ -5,58 +5,65 @@
  */
 package threads;
 
-import fractal.Complex;
 import fractal.FractalImage;
-import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JProgressBar;
+import javax.swing.text.JTextComponent;
 
 
 /**
  *
  * @author Canoso
  */
-public class Parallel extends Thread{
-    int ini, fin;
-    FractalImage frac;
-    // teste
+public class Parallel extends FractalCalculus{
+    
+    FractalThread[] thr;
+    
     float Brightness = 1f;
     float Saturation = 1f;
 
-    public Parallel(int ini, int fin, FractalImage fractal, float brightness, float saturation) {
-        this.ini = ini;
-        this.fin = fin;
-        this.frac = fractal;
-        this.Brightness = brightness;
-        this.Saturation = saturation;
+    public Parallel(JProgressBar pb, JTextComponent txt, FractalImage img) {
+        super(pb, txt, img);
     }
 
-    public float getBrightness() {
-        return Brightness;
-    }
-
-    public void setBrightness(float Brightness) {
-        this.Brightness = Brightness;
-    }
-
-    public float getSaturation() {
-        return Saturation;
-    }
-
-    public void setSaturation(float Saturation) {
-        this.Saturation = Saturation;
-    }
-    
-    
     @Override
-    public void run(){
-        for (int y = 0; y < frac.height; y++) {
-            for (int x = 0; x < frac.width; x++) {
-                double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
-                double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
-                int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
-                float Hue = (index%256)/255.0f;
-                //float Brightness = index < 256 ? 1f : 0;
-                Color color = Color.getHSBColor(Hue, getSaturation(), getBrightness());
-                frac.img.setRGB(x, y, color.getRGB());
+    public void calculate(){
+        if (thr != null && thr[0].isAlive()){
+            stop();
+        }
+        time = System.currentTimeMillis();
+        // Array de threads com o nº de processadores
+        int cores = Runtime.getRuntime().availableProcessors();
+        thr = new FractalThread[cores];
+
+        // dimensao do intervalo
+        int dim = frac.height / cores;
+
+        for (int i = 0; i < cores; i++) {
+            // criar as threads com os limites
+            thr[i] = new FractalThread(dim * i, (i + 1) * dim, frac);
+            // executar as threads
+            thr[i].start();
+        }
+
+        for(FractalThread fractalThread : thr){
+            try {
+                fractalThread.join();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Parallel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        time = System.currentTimeMillis() - time;
+    }
+
+    @Override
+    public void stop() {
+        if (thr != null){
+            if (thr[0].isAlive()){
+                for(FractalThread fractalThread : thr){
+                    fractalThread.interrupt();
+                }
             }
         }
     }
