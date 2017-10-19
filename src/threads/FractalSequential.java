@@ -34,11 +34,10 @@ public class FractalSequential extends FractalCalculus implements Runnable {
      */
     @Override
     public void calculate() {
-        if (singleThread != null) {
-            System.out.println(singleThread.isAlive());
-            if (singleThread.isAlive()) {
+        if (singleThread != null && singleThread.isAlive()) {
+            
                 stop();
-            }
+            
         }
         singleThread = new Thread(this);
         singleThread.start();
