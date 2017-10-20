@@ -22,7 +22,8 @@ public class BurningShip extends FractalFunction {
         Complex z = new Complex(0,0);
         int itera = 0;
         while (z.distanceToOrigin() < 2 && itera < super.getMaxIter()) {
-            z = z.absC().times(z.absC()).plus(c);
+            Complex y = new Complex(Math.abs(z.re()), Math.abs(z.im()));
+            z  = y.times(y).plus(c);
             itera++;
         }
         return itera;

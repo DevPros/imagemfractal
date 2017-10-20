@@ -1,7 +1,6 @@
 package fractal;
 
 import fractal.functions.FractalFunction;
-import fractal.functions.Madelbroth;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -30,7 +29,7 @@ public final class FractalImage extends JComponent implements MouseListener {
     public double centerX = 0;
     public double centerY = 0;
     public double zoom = 0;
-
+    public double newZoom = 0;
     static float Saturation = 1f;
     static float Brightness = 1f;
 
@@ -46,12 +45,11 @@ public final class FractalImage extends JComponent implements MouseListener {
      *
      * @param width largura do fractal
      * @param height altura do fractal
-     * @param f
      */
     public FractalImage(int width, int height) {
         resizeImg(width, height);
     }
-    
+
     public float getSaturation() {
         return Saturation;
     }
@@ -73,10 +71,12 @@ public final class FractalImage extends JComponent implements MouseListener {
     public void setFractalFunction(FractalFunction func) {
         this.fractal = func;
     }
+
     /**
-     * 
+     * Altera a dimensão das imagens
+     *
      * @param width
-     * @param height 
+     * @param height
      */
     public void resizeImg(int width, int height) {
         this.width = width;
@@ -84,7 +84,15 @@ public final class FractalImage extends JComponent implements MouseListener {
         this.setPreferredSize(new Dimension(width, height));
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
         this.addMouseListener(this);
-        zoom = (4.00 / width) * 2;
+        zoom = (4.00 / width)*2;
+    }
+
+    public BufferedImage getImg() {
+        return img;
+    }
+    
+    public void setNewZoom(double newZoom) {
+        this.newZoom = newZoom;
     }
 
     /**
@@ -131,6 +139,11 @@ public final class FractalImage extends JComponent implements MouseListener {
         calculus.stop();
     }
 
+    /**
+     * Desenha o Fractal na telaS
+     *
+     * @param gr
+     */
     @Override
     public void paintComponent(Graphics gr) {
         //gr.drawImage(img, 0, 0, null);
@@ -208,15 +221,17 @@ public final class FractalImage extends JComponent implements MouseListener {
             }
         }
     } */
+    @Override
     public void mouseClicked(MouseEvent e) {
         centerX = centerX + (e.getX() - width / 2) * zoom;
         centerY = centerY + (e.getY() - height / 2) * zoom;
         if (e.getButton() == MouseEvent.BUTTON1) {
-            zoom *= 1.2;
+            zoom *= newZoom;
         }
         if (e.getButton() == MouseEvent.BUTTON3) {
-            zoom /= 1.2;
+            zoom /= newZoom;
         }
+        System.out.println(newZoom);
         initCalculateFractalGUI();
         repaint();
         revalidate();

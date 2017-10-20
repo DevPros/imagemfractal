@@ -38,7 +38,10 @@ public class FractalSequential extends FractalCalculus implements Runnable {
             stop();
         }
         singleThread = new Thread(this);
+        txt.setText("A Calcular....");
+        
         singleThread.start();
+        
     }
 
     /**
@@ -56,9 +59,8 @@ public class FractalSequential extends FractalCalculus implements Runnable {
      */
     @Override
     public void run() {
-        pb.setMaximum(frac.height);
-        txt.setText("A Calcular....");
         time = System.currentTimeMillis();
+        pb.setMaximum(frac.height);
         for (int y = 0; y < frac.height; y++) {
             pb.setValue(y);
             for (int x = 0; x < frac.width; x++) {

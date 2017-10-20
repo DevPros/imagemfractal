@@ -1,6 +1,6 @@
 package fractal;
 
-import fractal.functions.Madelbroth;
+import fractal.functions.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,6 +14,7 @@ public class APPFractal extends JPanel {
 
         JFrame window = new JFrame("Fractal");
         FractalImage f = new FractalImage(3840, 2160);
+        f.setFractalFunction(new Lyapunov(1024));
         //FractalImage f = new FractalImage(800, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //
