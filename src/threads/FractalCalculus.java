@@ -14,9 +14,9 @@ import javax.swing.text.JTextComponent;
  * @author Rui Barcelos https://github.com/barcelosrui
  */
 public abstract class FractalCalculus {
-    JProgressBar pb;
-    JTextComponent txt;
-    FractalImage frac;
+    public JProgressBar pb;
+    public JTextComponent txt;
+    public FractalImage frac;
     long time;
 
     public FractalCalculus(JProgressBar pb, JTextComponent txt, FractalImage frac) {

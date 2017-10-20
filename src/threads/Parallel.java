@@ -11,15 +11,14 @@ import java.util.logging.Logger;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
-
 /**
  *
  * @author Canoso
  */
-public class Parallel extends FractalCalculus{
-    
+public class Parallel extends FractalCalculus {
+
     FractalThread[] thr;
-    
+
     float Brightness = 1f;
     float Saturation = 1f;
 
@@ -28,10 +27,12 @@ public class Parallel extends FractalCalculus{
     }
 
     @Override
-    public void calculate(){
-        if (thr != null && thr[0].isAlive()){
+    public void calculate() {
+
+        if (thr != null && thr[0].isAlive()) {
             stop();
         }
+        txt.setText("A Calcular...");
         time = System.currentTimeMillis();
         // Array de threads com o nº de processadores
         int cores = Runtime.getRuntime().availableProcessors();
@@ -45,25 +46,29 @@ public class Parallel extends FractalCalculus{
             thr[i] = new FractalThread(dim * i, (i + 1) * dim, frac);
             // executar as threads
             thr[i].start();
+            frac.repaint();
+            frac.revalidate();
         }
 
-        for(FractalThread fractalThread : thr){
+        for (FractalThread fractalThread : thr) {
             try {
                 fractalThread.join();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Parallel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
         time = System.currentTimeMillis() - time;
+        txt.setText(time + "");
     }
 
     @Override
     public void stop() {
-        if (thr != null){
+        if (thr != null) {
             //if (thr[0].isAlive()){
-                for(FractalThread fractalThread : thr){
-                    fractalThread.interrupt();
-                }
+            for (FractalThread fractalThread : thr) {
+                fractalThread.interrupt();
+            }
             //}
         }
     }

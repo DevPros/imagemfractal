@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/functions/Fratal.java</file>
-            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/threads/Balanced.java</file>
-            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/threads/Parallel.java</file>
-            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/APPFractal.java</file>
-            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/fractal/FractalImage.java</file>
-            <file>file:/D:/JPK/Escola/Licenciatura/3º%20Ano/Sitemas%20Distribuidos/fractalAulas/src/threads/Sequencial.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/fractal/FractalImage.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/fractal/Complex.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/threads/Balanced.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/threads/FractalSequential.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/threads/FractalThreadBal.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/fractal/functions/Lyapunov.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/threads/Parallel.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/threads/FractalCalculus.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/fractal/functions/Madelbroth.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/threads/FractalThread.java</file>
+            <file>file:/C:/Users/Rui%20Barcelos/Desktop/SD/GITHUB/fractalAulas/src/fractal/APPFractal.java</file>
         </group>
     </open-files>
 </project-private>

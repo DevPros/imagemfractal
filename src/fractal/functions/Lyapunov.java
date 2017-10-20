@@ -16,17 +16,12 @@ public class Lyapunov extends FractalFunction {
     public Lyapunov(long itera) {
         super(itera);
     }
-
-    public Lyapunov() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     @Override
     public int getDivergentIteration(Complex c) {
         double sum = 0;
         double r;
         double z = 0.5;
-        int itera = 0;
         while (sum < super.getMaxIter()) {
             
             r = z;

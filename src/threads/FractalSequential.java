@@ -72,6 +72,7 @@ public class FractalSequential extends FractalCalculus implements Runnable {
                 frac.img.setRGB(x, y, color.getRGB());
             }
             frac.repaint();
+            frac.revalidate();
         }
         time = System.currentTimeMillis() - time;
         txt.setText(time + "");

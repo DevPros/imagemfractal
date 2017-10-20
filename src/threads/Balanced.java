@@ -5,9 +5,7 @@
  */
 package threads;
 
-import fractal.Complex;
 import fractal.FractalImage;
-import java.awt.Color;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +31,8 @@ public class Balanced extends FractalCalculus {
         if (thr != null && thr[0].isAlive()){
             stop();
         }
-        
+        time = System.currentTimeMillis();
+        txt.setText("A calcular...");
         // Array de threads com o nº de processadores
         int cores = Runtime.getRuntime().availableProcessors();
         FractalThreadBal[] thr = new FractalThreadBal[cores];
@@ -44,10 +43,13 @@ public class Balanced extends FractalCalculus {
         
         for (int i = 0; i < thr.length; i++) {
             // atribuir a cada thread um conjunto de iterações
-            thr[i] = new FractalThreadBal(ticket, frac);
+            thr[i] = new FractalThreadBal(ticket, frac,pb);
             // executar as threads
             thr[i].start();
+            frac.revalidate();
+            frac.repaint();
         }
+        
         
         // Esperar que as threads concluam o trabalho
         for (int i = 0; i < thr.length; i++) {
@@ -57,6 +59,8 @@ public class Balanced extends FractalCalculus {
                 Logger.getLogger(FractalImage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        time = System.currentTimeMillis() - time;
+        txt.setText(time+"");
         
         
     }

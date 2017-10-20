@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
+import javax.swing.JSlider;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import threads.FractalCalculus;
 
 /**
  *
@@ -28,9 +28,7 @@ public class GUIFratal extends javax.swing.JFrame {
     ButtonGroup bf = new ButtonGroup();
     ButtonGroup ba = new ButtonGroup();
     ButtonGroup br = new ButtonGroup();
-    FractalImage f = null;
-    FractalCalculus fc = null;
-    long sT1 = 0, eT1 = 0, sT2 = 0, eT2 = 0, sT3 = 0, eT3 = 0;
+    FractalImage f = new FractalImage();
     double w = 800.0;
     double h = 600.0;
     double ratio = h / w;
@@ -40,55 +38,50 @@ public class GUIFratal extends javax.swing.JFrame {
      */
     public GUIFratal() {
         initComponents();
-        txt_itera.setText("256");
-        f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new Madelbroth(Long.parseLong(txt_itera.getText())), 2, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-        f.seqCalculateFractalGUI(pbar, jSecTemp);
+        selectFactal();
+        sliders(sl_bri);
+        sliders(rb_sat);
+        f.resizeImg(Integer.parseInt(txt_width.getText() + ""), Integer.parseInt(txt_height.getText() + ""));
+        f.setFractalFunction(new Madelbroth(Long.parseLong(txt_itera.getText())));
+        f.setSaturationBrightness((float) sl_bri.getValue(), (float) rb_sat.getValue());
+        f.seqCalculateFractalGUI(pbar, txt_seq);
         f.initCalculateFractalGUI();
-        f.repaint();
         jPanel2.setLayout(new BorderLayout());
         jPanel2.add(f);
         jPanel2.setVisible(true);
         setExtendedState(GUIFratal.MAXIMIZED_BOTH);
-        selectFactal();
-        sliders();
+
     }
 
     /**
      * Agrupa os RadioButtons e pré define as selecções
      */
     private void selectFactal() {
-        bf.add(jRadioButton1);
-        bf.add(jRadioButton2);
-        jRadioButton1.setSelected(true);
-        ba.add(jRadioButton3);
-        ba.add(jRadioButton4);
-        ba.add(jRadioButton5);
-        jRadioButton3.setSelected(true);
-        br.add(jRadioButton6);
-        br.add(jRadioButton7);
-        br.add(jRadioButton8);
-        br.add(jRadioButton9);
-        jRadioButton6.setSelected(true);
+        bf.add(rb_madelbroth);
+        bf.add(rb_burning);
+        rb_madelbroth.setSelected(true);
+        ba.add(rb_seq);
+        ba.add(rb_par);
+        ba.add(rb_bal);
+        rb_seq.setSelected(true);
+        br.add(rb_uhd);
+        br.add(rb_fhd);
+        br.add(rb_rhd);
+        br.add(rb_sd);
+        rb_uhd.setSelected(true);
     }
 
     /**
      * Slider
      */
-    private void sliders() {
-        jSlider1.setMinimum(0);
-        jSlider1.setMajorTickSpacing(0);
-        jSlider1.setMaximum(255);
-        jSlider1.setMajorTickSpacing(255);
-        jSlider1.setValue(255);
-        jSlider1.setPaintTicks(true);
-        jSlider1.setPaintLabels(true);
-        jSlider2.setMinimum(0);
-        jSlider2.setMajorTickSpacing(0);
-        jSlider2.setMaximum(255);
-        jSlider2.setMajorTickSpacing(255);
-        jSlider2.setValue(255);
-        jSlider2.setPaintTicks(true);
-        jSlider2.setPaintLabels(true);
+    private void sliders(JSlider sl) {
+        sl.setMinimum(0);
+        sl.setMajorTickSpacing(0);
+        sl.setMaximum(255);
+        sl.setMajorTickSpacing(255);
+        sl.setValue(255);
+        sl.setPaintTicks(true);
+        sl.setPaintLabels(true);
     }
 
     /**
@@ -104,41 +97,40 @@ public class GUIFratal extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         bt_save = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txt_width = new javax.swing.JTextField();
+        txt_height = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
-        jRadioButton8 = new javax.swing.JRadioButton();
-        jRadioButton9 = new javax.swing.JRadioButton();
+        rb_uhd = new javax.swing.JRadioButton();
+        rb_fhd = new javax.swing.JRadioButton();
+        rb_rhd = new javax.swing.JRadioButton();
+        rb_sd = new javax.swing.JRadioButton();
         jPanel4 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rb_madelbroth = new javax.swing.JRadioButton();
+        rb_burning = new javax.swing.JRadioButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
+        rb_seq = new javax.swing.JRadioButton();
+        rb_par = new javax.swing.JRadioButton();
+        rb_bal = new javax.swing.JRadioButton();
         jPanel7 = new javax.swing.JPanel();
-        jSlider1 = new javax.swing.JSlider();
-        jSlider2 = new javax.swing.JSlider();
+        sl_bri = new javax.swing.JSlider();
+        rb_sat = new javax.swing.JSlider();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        l_bri = new javax.swing.JLabel();
+        l_sat = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        bt_appFratal = new javax.swing.JButton();
+        bt_calc = new javax.swing.JButton();
         txt_itera = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         pbar = new javax.swing.JProgressBar();
-        jSecTemp = new javax.swing.JTextField();
-        jStopButton = new javax.swing.JButton();
+        txt_seq = new javax.swing.JTextField();
+        bt_stop = new javax.swing.JButton();
+        txt_par = new javax.swing.JTextField();
+        txt_bal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -162,9 +154,9 @@ public class GUIFratal extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Tamanho"));
 
-        jTextField1.setText("3840");
+        txt_width.setText("3840");
 
-        jTextField2.setText("2160");
+        txt_height.setText("2160");
 
         jLabel1.setText("Width");
 
@@ -172,31 +164,31 @@ public class GUIFratal extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jRadioButton6.setText("UHD");
-        jRadioButton6.addActionListener(new java.awt.event.ActionListener() {
+        rb_uhd.setText("UHD");
+        rb_uhd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton6ActionPerformed(evt);
+                rb_uhdActionPerformed(evt);
             }
         });
 
-        jRadioButton7.setText("FHD");
-        jRadioButton7.addActionListener(new java.awt.event.ActionListener() {
+        rb_fhd.setText("FHD");
+        rb_fhd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton7ActionPerformed(evt);
+                rb_fhdActionPerformed(evt);
             }
         });
 
-        jRadioButton8.setText("RHD");
-        jRadioButton8.addActionListener(new java.awt.event.ActionListener() {
+        rb_rhd.setText("RHD");
+        rb_rhd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton8ActionPerformed(evt);
+                rb_rhdActionPerformed(evt);
             }
         });
 
-        jRadioButton9.setText("SD");
-        jRadioButton9.addActionListener(new java.awt.event.ActionListener() {
+        rb_sd.setText("SD");
+        rb_sd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton9ActionPerformed(evt);
+                rb_sdActionPerformed(evt);
             }
         });
 
@@ -207,8 +199,8 @@ public class GUIFratal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(txt_height, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                    .addComponent(txt_width))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -217,10 +209,10 @@ public class GUIFratal extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton6)
-                    .addComponent(jRadioButton7)
-                    .addComponent(jRadioButton8)
-                    .addComponent(jRadioButton9))
+                    .addComponent(rb_uhd)
+                    .addComponent(rb_fhd)
+                    .addComponent(rb_rhd)
+                    .addComponent(rb_sd))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -229,37 +221,37 @@ public class GUIFratal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_width, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_height, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jRadioButton6)
+                .addComponent(rb_uhd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton7)
+                .addComponent(rb_fhd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton8)
+                .addComponent(rb_rhd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton9)
+                .addComponent(rb_sd)
                 .addGap(0, 7, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Fractal"));
 
-        jRadioButton1.setText("Madelbroth");
+        rb_madelbroth.setText("Madelbroth");
 
-        jRadioButton2.setText("Burning Ship");
+        rb_burning.setText("Burning Ship");
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jRadioButton3.setText("Sequencial");
+        rb_seq.setText("Sequencial");
 
-        jRadioButton4.setText("Paralelo");
+        rb_par.setText("Paralelo");
 
-        jRadioButton5.setText("Balanciado");
+        rb_bal.setText("Balanciado");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -268,15 +260,15 @@ public class GUIFratal extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(rb_madelbroth)
+                    .addComponent(rb_burning))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton5))
+                    .addComponent(rb_seq)
+                    .addComponent(rb_par)
+                    .addComponent(rb_bal))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -286,42 +278,42 @@ public class GUIFratal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(rb_madelbroth)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2))
+                        .addComponent(rb_burning))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jRadioButton3)
+                        .addComponent(rb_seq)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton4)))
+                        .addComponent(rb_par)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton5)
+                .addComponent(rb_bal)
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jRadioButton1.getAccessibleContext().setAccessibleName("RButtonMadelbroth");
-        jRadioButton2.getAccessibleContext().setAccessibleName("RButtonBurningShip");
+        rb_madelbroth.getAccessibleContext().setAccessibleName("RButtonMadelbroth");
+        rb_burning.getAccessibleContext().setAccessibleName("RButtonBurningShip");
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Cor"));
 
-        jSlider1.setToolTipText("");
-        jSlider1.setName(""); // NOI18N
-        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+        sl_bri.setToolTipText("");
+        sl_bri.setName(""); // NOI18N
+        sl_bri.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSlider1StateChanged(evt);
+                sl_briStateChanged(evt);
             }
         });
 
-        jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
+        rb_sat.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSlider2StateChanged(evt);
+                rb_satStateChanged(evt);
             }
         });
 
         jLabel4.setText("Luminosidade");
 
-        jLabel5.setText("jLabel5");
+        l_bri.setText("jLabel5");
 
-        jLabel6.setText("jLabel5");
+        l_sat.setText("jLabel5");
 
         jLabel7.setText("Saturação");
 
@@ -334,12 +326,12 @@ public class GUIFratal extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSlider2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(rb_sat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(sl_bri, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)))
+                            .addComponent(l_bri)
+                            .addComponent(l_sat)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -355,45 +347,47 @@ public class GUIFratal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(sl_bri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(rb_sat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(l_bri)
                         .addGap(48, 48, 48)
-                        .addComponent(jLabel6)))
+                        .addComponent(l_sat)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        bt_appFratal.setText("Calcular");
-        bt_appFratal.addActionListener(new java.awt.event.ActionListener() {
+        bt_calc.setText("Calcular");
+        bt_calc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_appFratalActionPerformed(evt);
+                bt_calcActionPerformed(evt);
             }
         });
+
+        txt_itera.setText("256");
 
         jLabel3.setText("Iterações");
 
         jLabel8.setText("Tempo Sequencial:");
 
-        jLabel9.setText("jLabel9");
-
         jLabel10.setText("Tempo Paralelo:");
 
         jLabel11.setText("Tempo Balanciado:");
 
-        jLabel12.setText("jLabel12");
+        txt_seq.setEditable(false);
 
-        jLabel13.setText("jLabel13");
-
-        jStopButton.setText("Stop");
-        jStopButton.addActionListener(new java.awt.event.ActionListener() {
+        bt_stop.setText("Stop");
+        bt_stop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jStopButtonActionPerformed(evt);
+                bt_stopActionPerformed(evt);
             }
         });
+
+        txt_par.setEditable(false);
+
+        txt_bal.setEditable(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -406,9 +400,13 @@ public class GUIFratal extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jSecTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(bt_save)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bt_calc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bt_stop)
+                        .addGap(4, 4, 4))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -416,25 +414,18 @@ public class GUIFratal extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel13))
+                                .addComponent(txt_bal, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(31, 31, 31)
-                                .addComponent(jLabel12)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(bt_save)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bt_appFratal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jStopButton)
-                        .addGap(4, 4, 4)))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel10))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_par, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_seq, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(6, 6, 6))
         );
         jPanel6Layout.setVerticalGroup(
@@ -450,27 +441,25 @@ public class GUIFratal extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_itera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(26, 26, 26)
+                .addGap(23, 23, 23)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9))
+                    .addComponent(txt_seq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel12))
+                    .addComponent(txt_par, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jSecTemp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txt_bal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(pbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bt_save)
-                    .addComponent(bt_appFratal)
-                    .addComponent(jStopButton))
+                    .addComponent(bt_calc)
+                    .addComponent(bt_stop))
                 .addContainerGap())
         );
 
@@ -496,71 +485,51 @@ public class GUIFratal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bt_appFratalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_appFratalActionPerformed
-
-        if (jRadioButton3.isSelected()) {
-            if (jRadioButton1.isSelected()) {
-                jPanel2.remove(f);
-                sT1 = System.currentTimeMillis();
-                f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new Madelbroth(Long.parseLong(txt_itera.getText())), 0, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-                f.seqCalculateFractalGUI(pbar, jSecTemp);
-                f.initCalculateFractalGUI();
-                eT1 = System.currentTimeMillis();
+    private void bt_calcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_calcActionPerformed
+        /**
+         * Algoritmo Sequencial 1º MadelBroth 2º BurningShip
+         */
+        f.resizeImg(Integer.parseInt(txt_width.getText() + ""), Integer.parseInt(txt_height.getText() + ""));
+        f.setSaturationBrightness((float) sl_bri.getValue(), (float) rb_sat.getValue());
+        if (rb_seq.isSelected()) {
+            if (rb_madelbroth.isSelected()) {
+                f.setFractalFunction(new Madelbroth(Long.parseLong(txt_itera.getText())));
+                f.seqCalculateFractalGUI(pbar, txt_seq);
             }
-            if (jRadioButton2.isSelected()) {
-                jPanel2.remove(f);
-                sT1 = System.currentTimeMillis();
-                f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new BurningShip(Long.parseLong(txt_itera.getText())), 0, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-                f.seqCalculateFractalGUI(pbar, jSecTemp);
-                f.initCalculateFractalGUI();
-                eT1 = System.currentTimeMillis();
+            if (rb_burning.isSelected()) {
+                f.setFractalFunction(new BurningShip(Long.parseLong(txt_itera.getText())));
+                f.seqCalculateFractalGUI(pbar, txt_seq);
             }
         }
-        jLabel9.setText((eT1 - sT1) + "");
-        if (jRadioButton4.isSelected()) {
-            if (jRadioButton1.isSelected()) {
-                jPanel2.remove(f);
-                sT2 = System.currentTimeMillis();
-                f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new Madelbroth(Long.parseLong(txt_itera.getText())), 1, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-                f.parCalculateFractalGUI(pbar, jSecTemp);
-                f.initCalculateFractalGUI();
-                eT2 = System.currentTimeMillis();
+        /**
+         * Algoritmo Paralelo 1º MadelBroth 2º BurningShip
+         */
+        if (rb_par.isSelected()) {
+            if (rb_madelbroth.isSelected()) {
+                f.setFractalFunction(new Madelbroth(Long.parseLong(txt_itera.getText())));
+                f.parCalculateFractalGUI(pbar, txt_par);
             }
-            if (jRadioButton2.isSelected()) {
-                jPanel2.remove(f);
-                sT2 = System.currentTimeMillis();
-                f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new BurningShip(Long.parseLong(txt_itera.getText())), 1, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-                f.parCalculateFractalGUI(pbar, jSecTemp);
-                f.initCalculateFractalGUI();
-                eT2 = System.currentTimeMillis();
+            if (rb_burning.isSelected()) {
+                f.setFractalFunction(new BurningShip(Long.parseLong(txt_itera.getText())));
+                f.parCalculateFractalGUI(pbar, txt_par);
+            }
+
+        }
+        /**
+         * Algoritmo Balanciado 1º MadelBroth 2º BurningShip
+         */
+        if (rb_bal.isSelected()) {
+            if (rb_madelbroth.isSelected()) {
+                f.setFractalFunction(new Madelbroth(Long.parseLong(txt_itera.getText())));
+                f.balCalculateFractalGUI(pbar, txt_bal);
+            }
+            if (rb_burning.isSelected()) {
+                f.setFractalFunction(new BurningShip(Long.parseLong(txt_itera.getText())));
+                f.balCalculateFractalGUI(pbar, txt_bal);
             }
         }
-        jLabel12.setText((eT2 - sT2) + "");
-        if (jRadioButton5.isSelected()) {
-            if (jRadioButton1.isSelected()) {
-                jPanel2.remove(f);
-                sT3 = System.currentTimeMillis();
-                f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new Madelbroth(Long.parseLong(txt_itera.getText())), 2, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-                f.balCalculateFractalGUI(pbar, jSecTemp);
-                f.initCalculateFractalGUI();
-                eT3 = System.currentTimeMillis();
-            }
-            if (jRadioButton2.isSelected()) {
-                jPanel2.remove(f);
-                sT3 = System.currentTimeMillis();
-                f = new FractalImage(Integer.parseInt(jTextField1.getText() + ""), Integer.parseInt(jTextField2.getText() + ""), new BurningShip(Long.parseLong(txt_itera.getText())), 2, (float) jSlider1.getValue(), (float) jSlider2.getValue());
-                f.balCalculateFractalGUI(pbar, jSecTemp);
-                f.initCalculateFractalGUI();
-                
-                eT3 = System.currentTimeMillis();
-            }
-        }
-        jLabel13.setText((eT3 - sT3) + "");
-        jPanel2.add(f);
-        jPanel2.setVisible(true);
-
-
-    }//GEN-LAST:event_bt_appFratalActionPerformed
+        f.initCalculateFractalGUI();
+    }//GEN-LAST:event_bt_calcActionPerformed
 
     private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
         BufferedImage bi = new BufferedImage(f.getWidth(), f.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -579,39 +548,39 @@ public class GUIFratal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bt_saveActionPerformed
 
-    private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
-        jTextField1.setText("3860");
-        jTextField2.setText("2060");
-    }//GEN-LAST:event_jRadioButton6ActionPerformed
+    private void rb_uhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_uhdActionPerformed
+        txt_width.setText("3860");
+        txt_height.setText("2060");
+    }//GEN-LAST:event_rb_uhdActionPerformed
 
-    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
-        jLabel5.setText(jSlider1.getValue() + "");
-    }//GEN-LAST:event_jSlider1StateChanged
+    private void sl_briStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sl_briStateChanged
+        l_bri.setText(sl_bri.getValue() + "");
+    }//GEN-LAST:event_sl_briStateChanged
 
-    private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
-        jLabel6.setText(jSlider2.getValue() + "");
-    }//GEN-LAST:event_jSlider2StateChanged
+    private void rb_satStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rb_satStateChanged
+        l_sat.setText(rb_sat.getValue() + "");
+    }//GEN-LAST:event_rb_satStateChanged
 
-    private void jRadioButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton7ActionPerformed
-        jTextField1.setText("1920");
-        jTextField2.setText("1080");
-    }//GEN-LAST:event_jRadioButton7ActionPerformed
+    private void rb_fhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_fhdActionPerformed
+        txt_width.setText("1920");
+        txt_height.setText("1080");
+    }//GEN-LAST:event_rb_fhdActionPerformed
 
-    private void jRadioButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton8ActionPerformed
-        jTextField1.setText("1280");
-        jTextField2.setText("720");
-    }//GEN-LAST:event_jRadioButton8ActionPerformed
+    private void rb_rhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_rhdActionPerformed
+        txt_width.setText("1280");
+        txt_height.setText("720");
+    }//GEN-LAST:event_rb_rhdActionPerformed
 
-    private void jRadioButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton9ActionPerformed
-        jTextField1.setText("720");
-        jTextField2.setText("576");
-    }//GEN-LAST:event_jRadioButton9ActionPerformed
+    private void rb_sdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_sdActionPerformed
+        txt_width.setText("720");
+        txt_height.setText("576");
+    }//GEN-LAST:event_rb_sdActionPerformed
     /*
      * Botão de stop
      */
-    private void jStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStopButtonActionPerformed
-        fc.stop();
-    }//GEN-LAST:event_jStopButtonActionPerformed
+    private void bt_stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_stopActionPerformed
+        f.stopCalculateFractalGUI();
+    }//GEN-LAST:event_bt_stopActionPerformed
 
     /**
      * @param args the command line arguments
@@ -649,44 +618,43 @@ public class GUIFratal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bt_appFratal;
+    private javax.swing.JButton bt_calc;
     private javax.swing.JButton bt_save;
+    private javax.swing.JButton bt_stop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
-    private javax.swing.JRadioButton jRadioButton8;
-    private javax.swing.JRadioButton jRadioButton9;
-    private javax.swing.JTextField jSecTemp;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSlider jSlider2;
-    private javax.swing.JButton jStopButton;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel l_bri;
+    private javax.swing.JLabel l_sat;
     private javax.swing.JProgressBar pbar;
+    private javax.swing.JRadioButton rb_bal;
+    private javax.swing.JRadioButton rb_burning;
+    private javax.swing.JRadioButton rb_fhd;
+    private javax.swing.JRadioButton rb_madelbroth;
+    private javax.swing.JRadioButton rb_par;
+    private javax.swing.JRadioButton rb_rhd;
+    private javax.swing.JSlider rb_sat;
+    private javax.swing.JRadioButton rb_sd;
+    private javax.swing.JRadioButton rb_seq;
+    private javax.swing.JRadioButton rb_uhd;
+    private javax.swing.JSlider sl_bri;
+    private javax.swing.JTextField txt_bal;
+    private javax.swing.JTextField txt_height;
     private javax.swing.JTextField txt_itera;
+    private javax.swing.JTextField txt_par;
+    private javax.swing.JTextField txt_seq;
+    private javax.swing.JTextField txt_width;
     // End of variables declaration//GEN-END:variables
 }
