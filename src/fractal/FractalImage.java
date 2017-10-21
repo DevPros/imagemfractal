@@ -3,11 +3,9 @@ package fractal;
 import fractal.functions.FractalFunction;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import java.awt.Dimension;
-import java.awt.event.MouseMotionListener;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 import threads.FractalCalculus;
@@ -17,7 +15,7 @@ import threads.*;
  *
  * @author canoso
  */
-public final class FractalImage extends JComponent implements MouseListener, MouseMotionListener {
+public final class FractalImage extends JComponent {
 
     public BufferedImage img;
     public FractalFunction fractal;
@@ -84,7 +82,6 @@ public final class FractalImage extends JComponent implements MouseListener, Mou
         this.height = height;
         this.setPreferredSize(new Dimension(width, height));
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
-        this.addMouseListener(this);
         zoom = (4.00 / width)*2;
     }
 
@@ -149,40 +146,5 @@ public final class FractalImage extends JComponent implements MouseListener, Mou
     public void paintComponent(Graphics gr) {
         //gr.drawImage(img, 0, 0, null);
         gr.drawImage(img, 0, 0, getWidth(), getHeight(), this);
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        centerX = centerX + (e.getX() - width / 2) * zoom;
-        centerY = centerY + (e.getY() - height / 2) * zoom;
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            zoom *= newZoom;
-        }
-        if (e.getButton() == MouseEvent.BUTTON3) {
-            zoom /= newZoom;
-        }
-        System.out.println(newZoom);
-        initCalculateFractalGUI();
-        repaint();
-        revalidate();
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) { }
-    @Override
-    public void mouseReleased(MouseEvent e) { }
-    @Override
-    public void mouseEntered(MouseEvent e) { }
-    @Override
-    public void mouseExited(MouseEvent e) { }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
