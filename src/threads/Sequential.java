@@ -14,7 +14,7 @@ import javax.swing.text.JTextComponent;
  *
  * @author Rui Barcelos https://github.com/barcelosrui
  */
-public class FractalSequential extends FractalCalculus implements Runnable {
+public class Sequential extends FractalCalculus implements Runnable {
 
     Thread singleThread;
 
@@ -25,7 +25,7 @@ public class FractalSequential extends FractalCalculus implements Runnable {
      * @param txt
      * @param frac
      */
-    public FractalSequential(JProgressBar pb, JTextComponent txt, FractalImage frac) {
+    public Sequential(JProgressBar pb, JTextComponent txt, FractalImage frac) {
         super(pb, txt, frac);
     }
 

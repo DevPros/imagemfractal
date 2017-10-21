@@ -38,18 +38,17 @@ public class Balanced extends FractalCalculus {
         FractalThreadBal[] thr = new FractalThreadBal[cores];
         
         // senhas para os termos dos intervalos
-        //AtomicInteger ticket = new AtomicInteger(256); /599
-        ticket = new AtomicInteger(frac.height - 1); //2160
+
+        ticket = new AtomicInteger(frac.height - 1);
         
         for (int i = 0; i < thr.length; i++) {
             // atribuir a cada thread um conjunto de iterações
-            thr[i] = new FractalThreadBal(ticket, frac,pb);
+            thr[i] = new FractalThreadBal(ticket, frac, pb);
             // executar as threads
             thr[i].start();
             frac.revalidate();
             frac.repaint();
         }
-        
         
         // Esperar que as threads concluam o trabalho
         for (int i = 0; i < thr.length; i++) {
@@ -68,11 +67,11 @@ public class Balanced extends FractalCalculus {
     @Override
     public void stop() {
         if (thr != null){
-            //if (thr[0].isAlive()){
+            if (thr[0].isAlive()){
                 for(FractalThread fractalThread : thr){
                     fractalThread.interrupt();
                 }
-            //}
+            }
         }
     }
 }
