@@ -59,7 +59,7 @@ public class Balanced extends FractalCalculus {
             }
         }
         time = System.currentTimeMillis() - time;
-        txt.setText(time+"");
+        txt.setText(getTimeHum());
         
         
     }

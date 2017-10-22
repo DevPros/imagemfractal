@@ -6,6 +6,7 @@
 package threads;
 
 import fractal.*;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
@@ -27,9 +28,24 @@ public abstract class FractalCalculus {
     
     public abstract void calculate();
     public abstract void stop();
-
+    
+    /**
+     * Retorna o tempo em milisegundos
+     */
     public long getTime() {
         return time;
     }
     
+    /**
+     * Retorna o tempo para humanos (Horas:Minutos:Segundos:Ms)
+     * @return 
+     */
+    public String getTimeHum() {
+        return String.format("%d:%d:%d:%d",
+            TimeUnit.MILLISECONDS.toHours(time),
+            TimeUnit.MILLISECONDS.toMinutes(time)%60,
+            TimeUnit.MILLISECONDS.toSeconds(time)%60,
+            TimeUnit.MILLISECONDS.toMillis(time)%1000
+        );
+    }
 }
