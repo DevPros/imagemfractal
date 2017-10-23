@@ -31,8 +31,8 @@ import javax.swing.JSlider;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- *
- * @author Canoso
+ * @author João Canoso  https://github.com/jpcanoso
+ * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class GUIFratal extends javax.swing.JFrame {
 
@@ -40,12 +40,11 @@ public class GUIFratal extends javax.swing.JFrame {
     ButtonGroup ba = new ButtonGroup();
     ButtonGroup br = new ButtonGroup();
     FractalImage f = new FractalImage();
-    
+
     private JFrame JFrame = new JFrame();
     Dimension original;
-    
-    //ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);
 
+    //ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);
     /**
      * Creates new form GUIFratal
      */
@@ -63,8 +62,8 @@ public class GUIFratal extends javax.swing.JFrame {
         jPanel2.setLayout(new BorderLayout());
         jPanel2.add(f);
         jPanel2.setVisible(true);
-        evt();
         setExtendedState(GUIFratal.MAXIMIZED_BOTH);
+        evt();
 
     }
 
@@ -74,8 +73,8 @@ public class GUIFratal extends javax.swing.JFrame {
                 f.centerX = 0;
                 f.centerY = 0;
                 if (evt.getButton() == MouseEvent.BUTTON1) {
-                    f.centerX = f.centerX  + (evt.getX() - (f.width / 2.0)) * f.zoom;
-                    f.centerY = f.centerY  - (evt.getY() - (f.height / 2.0)) * f.zoom;
+                    f.centerX = f.centerX + (evt.getX() - (f.width / 2.0)) * f.zoom;
+                    f.centerY = f.centerY - (evt.getY() - (f.height / 2.0)) * f.zoom;
                     f.zoom *= f.newZoom;
                     f.initCalculateFractalGUI();
 
@@ -86,6 +85,11 @@ public class GUIFratal extends javax.swing.JFrame {
                     f.zoom /= f.newZoom;
                     f.initCalculateFractalGUI();
                 }
+            }
+        });
+        f.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                original = new Dimension(getContentPane().getWidth(), getContentPane().getHeight());
             }
         });
     }
@@ -342,8 +346,8 @@ public class GUIFratal extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rb_madelbroth)
                     .addComponent(rb_burning))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rb_seq)
@@ -665,17 +669,15 @@ public class GUIFratal extends javax.swing.JFrame {
         f.initCalculateFractalGUI();
     }//GEN-LAST:event_bt_calcActionPerformed
 
-    private void verificaRacio(){
-        
-        original = new Dimension(1300,706);
-        System.out.println("jPanel6.getWidth(): "+jPanel6.getWidth());
-        System.out.println("txt_width.getText(): "+Integer.parseInt(txt_width.getText()));
-        
-        int largJanela = jPanel6.getWidth() + jPanel2.getWidth();
-        System.out.println("largJanela: "+largJanela);
-        
+    private void verificaRacio() {
+        System.out.println("jPanel6.getWidth(): " + jPanel6.getWidth());
+        System.out.println("txt_width.getText(): " + Integer.parseInt(txt_width.getText()));
+
+        //int largJanela = jPanel6.getWidth() + jPanel2.getWidth();
+        //System.out.println("largJanela: " + largJanela);
+
         // se o tamanho do painel do lado esquerdo + o tamanho do fratal < largura da janela
-        if (jPanel6.getWidth() + Integer.parseInt(txt_width.getText()) < largJanela){
+        if (jPanel6.getWidth() + Integer.parseInt(txt_width.getText()) < original.width) {
             System.out.println("MENOR");
             //jPanel2.setSize(Integer.parseInt(txt_width.getText()), Integer.parseInt(txt_height.getText()));
             //JFrame.setResizable(false);
@@ -689,7 +691,7 @@ public class GUIFratal extends javax.swing.JFrame {
         JFrame.pack();
         //JFrame.repaint();
     }
-    
+
     private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "png");
         JFileChooser c = new JFileChooser();
@@ -746,19 +748,20 @@ public class GUIFratal extends javax.swing.JFrame {
     private void bt_plusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_plusActionPerformed
         double zoom = Double.parseDouble(txt_zoom.getText());
         zoom += 0.1;
-        txt_zoom.setText((zoom+"").format("%.2f", zoom).replace(",", "."));
+        txt_zoom.setText((zoom + "").format("%.2f", zoom).replace(",", "."));
         f.setNewZoom(Double.parseDouble(txt_zoom.getText()));
     }//GEN-LAST:event_bt_plusActionPerformed
 
     private void bt_minusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_minusActionPerformed
         double zoom = Double.parseDouble(txt_zoom.getText());
         zoom -= 0.1;
-        txt_zoom.setText((zoom+"").format("%.2f", zoom).replace(",", "."));
+        txt_zoom.setText((zoom + "").format("%.2f", zoom).replace(",", "."));
         f.setNewZoom(Double.parseDouble(txt_zoom.getText()));
     }//GEN-LAST:event_bt_minusActionPerformed
     /**
      * Botão para calculo da acelaração
-     * @param evt 
+     *
+     * @param evt
      */
     private void btn_aceleracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceleracaoActionPerformed
         f.resizeImg(Integer.parseInt(txt_width.getText() + ""), Integer.parseInt(txt_height.getText() + ""));
@@ -766,60 +769,62 @@ public class GUIFratal extends javax.swing.JFrame {
         defineFractal(Long.parseLong(txt_itera.getText()));
         // define fratal sequencial
         f.seqCalculateFractalGUI(pbar, txt_seq);
-    
+
         new Thread(() -> {
             long med1 = 0;
             long med2 = 0;
             Writer writer = null;
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date date = new Date();
-            
+
             try {
                 writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("aceleracao.txt"), "utf-8"));
                 //começar por escrever a data atual
-                writer.write(dateFormat.format(date)+'\r'+'\n');
+                writer.write(dateFormat.format(date) + '\r' + '\n');
                 // escrever a resolução:
-                writer.write("Resolução: " + txt_width.getText() + "x" + txt_height.getText()+'\r'+'\n');
+                writer.write("Resolução: " + txt_width.getText() + "x" + txt_height.getText() + '\r' + '\n');
                 // escrever o algoritmo
-                writer.write("Algoritmo: Sequencial"+'\r'+'\n');
-                
+                writer.write("Algoritmo: Sequencial" + '\r' + '\n');
+
                 for (int i = 0; i < 5; i++) {
                     f.initCalculateFractalGUI();
-                
+
                     med1 += f.calculus.getTime();
-                    writer.write(i+"º Calculo: " + f.calculus.getTime()+'\r'+'\n');
+                    writer.write(i + "º Calculo: " + f.calculus.getTime() + '\r' + '\n');
                     System.out.println(i + " valor: " + f.calculus.getTime());
                 }
-                med1 /=5;
-                writer.write("Média1: "+med1+'\r'+'\n');
-                writer.write("--------------------------------------------------"+'\r'+'\n');
-                writer.write("Algoritmo: xpto"+'\r'+'\n');
+                med1 /= 5;
+                writer.write("Média1: " + med1 + '\r' + '\n');
+                writer.write("--------------------------------------------------" + '\r' + '\n');
+                writer.write("Algoritmo: xpto" + '\r' + '\n');
                 if (rb_bal.isSelected()) {
                     f.balCalculateFractalGUI(pbar, txt_bal);
                 } else {
                     f.parCalculateFractalGUI(pbar, txt_par);
                 }
-                
+
                 for (int i = 0; i < 5; i++) {
                     f.initCalculateFractalGUI();
-                
+
                     med2 += f.calculus.getTime();
-                    writer.write(i+"º Calculo: " + f.calculus.getTime()+'\r'+'\n');
+                    writer.write(i + "º Calculo: " + f.calculus.getTime() + '\r' + '\n');
                     System.out.println(i + " valor: " + f.calculus.getTime());
                 }
-                med2 /=5;
-                writer.write("Média2: "+med2+'\r'+'\n');
-                writer.write("Acelaração: "+med1/med2);
+                med2 /= 5;
+                writer.write("Média2: " + med2 + '\r' + '\n');
+                writer.write("Acelaração: " + med1 / med2);
             } catch (IOException ex) {
                 // lança mensagem de erro, caso nao jea possivel criar ficheiro
                 JOptionPane.showMessageDialog(jPanel1, "Ocorreu um erro ao criar o ficheiro", "Erro", JOptionPane.ERROR_MESSAGE);
             } finally {
-                try {writer.close();} catch (Exception ex) { }
+                try {
+                    writer.close();
+                } catch (Exception ex) {
+                }
             }
         }).start();
     }//GEN-LAST:event_btn_aceleracaoActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */

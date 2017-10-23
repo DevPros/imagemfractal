@@ -8,8 +8,8 @@ package fractal.functions;
 import external.Complex;
 
 /**
- *
- * @author Canoso
+ * @author João Canoso  https://github.com/jpcanoso
+ * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class Lyapunov extends FractalFunction {
 

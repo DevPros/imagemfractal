@@ -8,11 +8,12 @@ package fractal.functions;
 import external.Complex;
 
 /**
- *
- * @author canoso
+ * @author João Canoso  https://github.com/jpcanoso
+ * @author Rui Barcelos https://github.com/barcelosrui
  */
 public abstract class FractalFunction {
-    long maxIter = 256; // default was 256
+    // número máximo de iterações
+    long maxIter = 256;
     
     public FractalFunction() {
     }

@@ -12,7 +12,7 @@ import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
 /**
- *
+ * @author João Canoso  https://github.com/jpcanoso
  * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class Sequential extends FractalCalculus implements Runnable {
@@ -46,7 +46,7 @@ public class Sequential extends FractalCalculus implements Runnable {
     }
 
     /**
-     * Para a thread
+     * Pára a thread
      */
     @Override
     public synchronized void stop() {

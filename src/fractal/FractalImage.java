@@ -2,7 +2,6 @@ package fractal;
 
 import fractal.functions.FractalFunction;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import java.awt.Dimension;
@@ -12,8 +11,8 @@ import threads.FractalCalculus;
 import threads.*;
 
 /**
- *
- * @author canoso
+ * @author João Canoso  https://github.com/jpcanoso
+ * @author Rui Barcelos https://github.com/barcelosrui
  */
 public final class FractalImage extends JComponent {
 
@@ -33,7 +32,8 @@ public final class FractalImage extends JComponent {
     static float Brightness = 1f;
 
     /**
-     * Construtor por defeito Assim é possivel arrastar este elemento para a GUI
+     * Construtor por defeito 
+     * Assim é possivel arrastar este elemento para a GUI
      */
     public FractalImage() {
         this(800, 600);
@@ -48,15 +48,28 @@ public final class FractalImage extends JComponent {
     public FractalImage(int width, int height) {
         resizeImg(width, height);
     }
-
+    
+    /**
+     * Retorna o valor da saturação
+     * @return float
+     */
     public float getSaturation() {
         return Saturation;
     }
-
+    
+    /**
+     * Retorna o valor do brilho
+     * @return float
+     */
     public float getBrightness() {
         return Brightness;
     }
-
+    
+    /**
+     * Define os valores do brilho e saturação
+     * @param Brightness
+     * @param Saturation 
+     */
     public void setSaturationBrightness(float Brightness, float Saturation) {
         this.Brightness = Brightness / 255f;
         this.Saturation = Saturation / 255f;
@@ -64,7 +77,6 @@ public final class FractalImage extends JComponent {
 
     /**
      * Implementa dinamicamente o algoritmo de exploração dos fractais
-     *
      * @param func - Algoritmo
      */
     public void setFractalFunction(FractalFunction func) {
@@ -73,7 +85,6 @@ public final class FractalImage extends JComponent {
 
     /**
      * Altera a dimensão das imagens
-     *
      * @param width
      * @param height
      */
@@ -84,11 +95,19 @@ public final class FractalImage extends JComponent {
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
         zoom = (4.00 / width)*2;
     }
-
+    
+    /**
+     * Returna a imagem to tipo BufferedImage
+     * @return BufferedImage
+     */
     public BufferedImage getImg() {
         return img;
     }
     
+    /**
+     * Define um novo zoom
+     * @param newZoom 
+     */
     public void setNewZoom(double newZoom) {
         this.newZoom = newZoom;
     }
@@ -114,7 +133,7 @@ public final class FractalImage extends JComponent {
     }
 
     /**
-     * Calcula balaceamento o fractal
+     * Calcula o fratal de forma balanciada
      *
      * @param pb
      * @param txt
