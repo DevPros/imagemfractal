@@ -7,6 +7,8 @@ package fractal;
 
 import fractal.functions.*;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,6 +25,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -37,11 +40,11 @@ public class GUIFratal extends javax.swing.JFrame {
     ButtonGroup ba = new ButtonGroup();
     ButtonGroup br = new ButtonGroup();
     FractalImage f = new FractalImage();
-    double w = 800.0;
-    double h = 600.0;
-    double ratio = h / w;
     
-    ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);
+    private JFrame JFrame = new JFrame();
+    Dimension original;
+    
+    //ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);
 
     /**
      * Creates new form GUIFratal
@@ -213,7 +216,7 @@ public class GUIFratal extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 706, Short.MAX_VALUE)
         );
 
         bt_save.setText("Salvar Imagem");
@@ -633,15 +636,15 @@ public class GUIFratal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -649,12 +652,38 @@ public class GUIFratal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bt_calcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_calcActionPerformed
+        verificaRacio();
         f.resizeImg(Integer.parseInt(txt_width.getText() + ""), Integer.parseInt(txt_height.getText() + ""));
         f.setSaturationBrightness((float) sl_bri.getValue(), (float) sl_sat.getValue());
         defineFractal(Long.parseLong(txt_itera.getText()));
         f.initCalculateFractalGUI();
     }//GEN-LAST:event_bt_calcActionPerformed
 
+    private void verificaRacio(){
+        
+        original = new Dimension(1300,706);
+        System.out.println("jPanel6.getWidth(): "+jPanel6.getWidth());
+        System.out.println("txt_width.getText(): "+Integer.parseInt(txt_width.getText()));
+        
+        int largJanela = jPanel6.getWidth() + jPanel2.getWidth();
+        System.out.println("largJanela: "+largJanela);
+        
+        // se o tamanho do painel do lado esquerdo + o tamanho do fratal < largura da janela
+        if (jPanel6.getWidth() + Integer.parseInt(txt_width.getText()) < largJanela){
+            System.out.println("MENOR");
+            //jPanel2.setSize(Integer.parseInt(txt_width.getText()), Integer.parseInt(txt_height.getText()));
+            //JFrame.setResizable(false);
+            jPanel2.setPreferredSize(new Dimension(Integer.parseInt(txt_width.getText()), Integer.parseInt(txt_height.getText())));
+            //
+        } else {
+            System.out.println("MAIOR");
+            jPanel2.setPreferredSize(original);
+            //JFrame.setResizable(true);
+        }
+        JFrame.pack();
+        //JFrame.repaint();
+    }
+    
     private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "png");
         JFileChooser c = new JFileChooser();
