@@ -5,7 +5,7 @@
  */
 package threads;
 
-import fractal.Complex;
+import external.Complex;
 import fractal.FractalImage;
 import java.awt.Color;
 

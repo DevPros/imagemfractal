@@ -1,4 +1,4 @@
-package fractal;
+package external;
 
 /*
 Copyright © 2000–2011, Robert Sedgewick and Kevin Wayne. 

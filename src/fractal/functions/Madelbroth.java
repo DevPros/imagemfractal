@@ -5,7 +5,7 @@
  */
 package fractal.functions;
 
-import fractal.Complex;
+import external.Complex;
 
 /**
  *
