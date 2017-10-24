@@ -20,6 +20,7 @@ public class FractalThreadBal extends Thread {
     FractalImage frac;
     public long time;
     JProgressBar pb;
+    // ticket
     AtomicInteger ticket;
     int y;
 
@@ -42,10 +43,6 @@ public class FractalThreadBal extends Thread {
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
 
                 float Hue = (index % 256) / 255.0f;
-                //float Brightness = index < 256 ? 1f : 0;
-
-                //int color = Color.HSBtoRGB((float)(index/256.0), 1, 1);
-                //System.out.println("x:"+x +" "+ "y:"+y);
                 Color color = Color.getHSBColor(Hue, frac.getSaturation(), frac.getBrightness());
                 frac.img.setRGB(x, y, color.getRGB());
             }

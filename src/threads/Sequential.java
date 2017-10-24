@@ -6,7 +6,7 @@
 package threads;
 
 import external.Complex;
-import fractal.*;
+import fractal.FractalImage;
 import java.awt.Color;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;

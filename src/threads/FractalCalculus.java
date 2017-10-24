@@ -31,6 +31,7 @@ public abstract class FractalCalculus {
     
     /**
      * Retorna o tempo em milisegundos
+     * @return long
      */
     public long getTime() {
         return time;
@@ -38,7 +39,7 @@ public abstract class FractalCalculus {
     
     /**
      * Retorna o tempo para humanos (Horas:Minutos:Segundos:Ms)
-     * @return 
+     * @return String
      */
     public String getTimeHum() {
         return String.format("%d:%d:%d:%d",

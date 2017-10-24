@@ -342,7 +342,7 @@ public class GUIFratal extends javax.swing.JFrame {
 
         rb_par.setText("Paralelo");
 
-        rb_bal.setText("Balanciado");
+        rb_bal.setText("Balanceado");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -552,7 +552,7 @@ public class GUIFratal extends javax.swing.JFrame {
 
         jLabel10.setText("Tempo Paralelo:");
 
-        jLabel11.setText("Tempo Balanciado:");
+        jLabel11.setText("Tempo Balanceado:");
 
         txt_seq.setEditable(false);
 
@@ -560,7 +560,7 @@ public class GUIFratal extends javax.swing.JFrame {
 
         txt_bal.setEditable(false);
 
-        jLabel6.setText("H:M:S:ssss");
+        jLabel6.setText("H:M:S:sss");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -715,8 +715,8 @@ public class GUIFratal extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_saveActionPerformed
 
     private void rb_uhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_uhdActionPerformed
-        txt_width.setText("3860");
-        txt_height.setText("2060");
+        txt_width.setText("3840");
+        txt_height.setText("2160");
     }//GEN-LAST:event_rb_uhdActionPerformed
 
     private void sl_briStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sl_briStateChanged
