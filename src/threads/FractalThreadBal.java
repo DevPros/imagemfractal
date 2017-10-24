@@ -48,7 +48,6 @@ public class FractalThreadBal extends Thread {
             }
             pb.setValue(y);
             frac.repaint();
-            frac.revalidate();
         }
         time = System.currentTimeMillis() - time;
     }

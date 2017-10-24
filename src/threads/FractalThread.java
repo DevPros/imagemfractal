@@ -47,7 +47,6 @@ public class FractalThread extends Thread {
                 frac.img.setRGB(x, y, color.getRGB());
             }
             frac.repaint();
-            frac.revalidate();
         }
         time = System.currentTimeMillis() - time;
     }
