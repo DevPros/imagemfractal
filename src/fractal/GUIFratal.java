@@ -50,6 +50,9 @@ public class GUIFratal extends javax.swing.JFrame {
      */
     public GUIFratal() {
         initComponents();
+        setExtendedState(GUIFratal.MAXIMIZED_BOTH);
+        newDimension();
+        verificaRacio();
         selectFactal();
         sliders(sl_bri);
         sliders(sl_sat);
@@ -62,7 +65,6 @@ public class GUIFratal extends javax.swing.JFrame {
         jPanel2.setLayout(new BorderLayout());
         jPanel2.add(f);
         jPanel2.setVisible(true);
-        setExtendedState(GUIFratal.MAXIMIZED_BOTH);
         evt();
 
     }
@@ -89,7 +91,8 @@ public class GUIFratal extends javax.swing.JFrame {
         });
         f.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
-                original = new Dimension(getContentPane().getWidth(), getContentPane().getHeight());
+                //original = new Dimension(getContentPane().getWidth(), getContentPane().getHeight());
+                newDimension();
             }
         });
     }
@@ -123,6 +126,10 @@ public class GUIFratal extends javax.swing.JFrame {
         sl.setValue(255);
         sl.setPaintTicks(true);
         sl.setPaintLabels(true);
+    }
+    
+    private void newDimension() {
+        original = new Dimension(getContentPane().getWidth(), getContentPane().getHeight());
     }
 
     /**
@@ -220,7 +227,7 @@ public class GUIFratal extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 612, Short.MAX_VALUE)
         );
 
         bt_save.setText("Salvar Imagem");
@@ -654,8 +661,8 @@ public class GUIFratal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 612, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         pack();

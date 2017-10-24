@@ -17,15 +17,22 @@ import javax.swing.text.JTextComponent;
  */
 public class Parallel extends FractalCalculus {
 
+    // Array de threads
     FractalThread[] thr;
 
-    float Brightness = 1f;
-    float Saturation = 1f;
-
+    /**
+     * Contrutor paralelo
+     * @param pb JProgressBar
+     * @param txt JTextComponent
+     * @param img FractalImage
+     */
     public Parallel(JProgressBar pb, JTextComponent txt, FractalImage img) {
         super(pb, txt, img);
     }
 
+    /**
+     * 
+     */
     @Override
     public void calculate() {
 
@@ -39,6 +46,7 @@ public class Parallel extends FractalCalculus {
         thr = new FractalThread[cores];
 
         // dimensao do intervalo
+        // altura a dividir pelo numero de cores
         int dim = frac.height / cores;
 
         for (int i = 0; i < cores; i++) {
@@ -62,6 +70,9 @@ public class Parallel extends FractalCalculus {
         txt.setText(getTimeHum());
     }
 
+    /**
+     * Pára a thread
+     */
     @Override
     public void stop() {
         if (thr != null) {

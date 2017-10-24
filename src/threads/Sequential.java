@@ -20,7 +20,7 @@ public class Sequential extends FractalCalculus implements Runnable {
     public Thread singleThread;
 
     /**
-     * Construtor
+     * Construtor sequencial
      *
      * @param pb
      * @param txt
@@ -31,7 +31,7 @@ public class Sequential extends FractalCalculus implements Runnable {
     }
 
     /**
-     * Function que serve para fazer o calculo da thread
+     * Inicia o calculo, chamando o .start() da thread
      */
     @Override
     public synchronized void calculate() {
@@ -56,7 +56,7 @@ public class Sequential extends FractalCalculus implements Runnable {
     }
 
     /**
-     * Arranca a thread
+     * Efetua os calculos de forma sequencial
      */
     @Override
     public synchronized void run() {

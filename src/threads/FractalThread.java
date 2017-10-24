@@ -15,11 +15,19 @@ import java.awt.Color;
  */
 public class FractalThread extends Thread {
 
+    // inicio do intervalo
     int ini;
+    // fim do intervalo
     int fin;
     FractalImage frac;
     public long time;
 
+    /**
+     * 
+     * @param ini
+     * @param fin
+     * @param frac 
+     */
     public FractalThread(int ini, int fin, FractalImage frac) {
         this.ini = ini;
         this.fin = fin;
@@ -35,7 +43,7 @@ public class FractalThread extends Thread {
                 double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
                 float Hue = (index % 256) / 255.0f;
-                Color color = Color.getHSBColor(Hue, 1, 1);
+                Color color = Color.getHSBColor(Hue, frac.getSaturation(), frac.getBrightness());
                 frac.img.setRGB(x, y, color.getRGB());
             }
             frac.repaint();

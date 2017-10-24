@@ -38,7 +38,6 @@ public class Balanced extends FractalCalculus {
         FractalThreadBal[] thr = new FractalThreadBal[cores];
         
         // senhas para os termos dos intervalos
-
         ticket = new AtomicInteger(frac.height - 1);
         
         for (int i = 0; i < thr.length; i++) {
