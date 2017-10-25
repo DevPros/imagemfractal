@@ -38,7 +38,7 @@ public class GUIFratal extends javax.swing.JFrame {
     ButtonGroup br = new ButtonGroup();
 
     /**
-     * Constru
+     * Construtor inicial que vai iniciar a interface
      */
     public GUIFratal() {
         initComponents();
@@ -787,9 +787,9 @@ public class GUIFratal extends javax.swing.JFrame {
                     System.out.println(i + " valor: " + f.calculus.getTime());
                 }
                 med1 /= 5;
-                writer.write("Média1: " + med1 + '\r' + '\n');
+                writer.write("Média Sequencial: " + med1 + '\r' + '\n');
                 writer.write("--------------------------------------------------" + '\r' + '\n');
-                writer.write("Algoritmo: xpto" + '\r' + '\n');
+                writer.write("Algoritmo: Paralelo" + '\r' + '\n');
                 if (rb_bal.isSelected()) {
                     f.balCalculateFractalGUI(pbar, txt_bal);
                 } else {
@@ -805,7 +805,7 @@ public class GUIFratal extends javax.swing.JFrame {
                 }
                 med2 /= 5;
                 double ace = med1 / med2;
-                writer.write("Média2: " + med2 + '\r' + '\n');
+                writer.write("Média Paralelo: " + med2 + '\r' + '\n');
                 writer.write("Acelaração: " + ace);
             } catch (IOException ex) {
                 // lança mensagem de erro, caso nao seja possivel criar ficheiro
