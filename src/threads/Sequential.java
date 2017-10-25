@@ -8,6 +8,7 @@ package threads;
 import external.Complex;
 import fractal.FractalImage;
 import java.awt.Color;
+import java.awt.geom.Point2D;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
@@ -54,19 +55,23 @@ public class Sequential extends FractalCalculus implements Runnable {
             singleThread.interrupt();
         }
     }
+    
+    
+    
 
     /**
      * Efetua os calculos de forma sequencial
      */
     @Override
-    public synchronized void run() {
+    public  void run() {
         time = System.currentTimeMillis();
         pb.setMaximum(frac.height);
         for (int y = 0; y < frac.height; y++) {
             pb.setValue(y);
             for (int x = 0; x < frac.width; x++) {
-                double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
-                double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
+                Point2D r = frac.getReal(x, y);
+                double reX = r.getX();
+                double reY = r.getY();
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
 
                 float Hue = (index % 256) / 255.0f;

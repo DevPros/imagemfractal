@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,34 +26,26 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * @author João Canoso  https://github.com/jpcanoso
+ * @author João Canoso https://github.com/jpcanoso
  * @author Rui Barcelos https://github.com/barcelosrui
  */
-public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
+public class GUIFratal extends javax.swing.JFrame {
 
     ButtonGroup bf = new ButtonGroup();
     ButtonGroup ba = new ButtonGroup();
     ButtonGroup br = new ButtonGroup();
-    FractalImage f = new FractalImage();
-
-    private JFrame JFrame = new JFrame();
-    Dimension original;
-
-    //ScheduledThreadPoolExecutor pool = new ScheduledThreadPoolExecutor(1);
     /**
      * Creates new form GUIFratal
      */
     public GUIFratal() {
         initComponents();
         setExtendedState(GUIFratal.MAXIMIZED_BOTH);
-        newDimension();
-        verificaRacio();
         selectFactal();
         sliders(sl_bri);
         sliders(sl_sat);
@@ -62,9 +55,6 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
         f.setSaturationBrightness((float) sl_bri.getValue(), (float) sl_sat.getValue());
         f.seqCalculateFractalGUI(pbar, txt_seq);
         f.initCalculateFractalGUI();
-        jPanel2.setLayout(new BorderLayout());
-        jPanel2.add(f);
-        jPanel2.setVisible(true);
         evt();
 
     }
@@ -73,21 +63,17 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
         f.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                f.centerX = 0;
-                f.centerY = 0;
+                Point2D r = f.getReal(evt.getX(),evt.getY());
+                f.centerX= r.getX();
+                f.centerY = r.getY();
                 if (evt.getButton() == MouseEvent.BUTTON1) {
-                    f.centerX = f.centerX + (evt.getX() - (f.width / 2.0)) * f.zoom;
-                    f.centerY = f.centerY - (evt.getY() - (f.height / 2.0)) * f.zoom;
                     f.zoom *= f.newZoom;
                     f.initCalculateFractalGUI();
-
                 }
                 if (evt.getButton() == MouseEvent.BUTTON3) {
-                    f.centerX = f.centerX + (evt.getX() - (f.width / 2.0)) * f.zoom;
-                    f.centerY = f.centerY - (evt.getY() - (f.height / 2.0)) * f.zoom;
                     f.zoom /= f.newZoom;
                     f.initCalculateFractalGUI();
-                }
+                }                
             }
         });
     }
@@ -121,11 +107,6 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
         sl.setValue(255);
         sl.setPaintTicks(true);
         sl.setPaintLabels(true);
-    }
-    
-    private void newDimension() {
-        // tamanho da janela - menu + margem de 10px
-        original = new Dimension((getContentPane().getWidth())-(jPanel6.getWidth()+10), getContentPane().getHeight()-10);
     }
 
     /**
@@ -167,6 +148,8 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
 
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        f = new fractal.FractalImage();
         jPanel6 = new javax.swing.JPanel();
         bt_save = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -219,15 +202,17 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Fractal Explorer By Barcelos & Canoso");
 
+        jScrollPane1.setViewportView(f);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 624, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 477, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
         );
 
         bt_save.setText("Salvar Imagem");
@@ -250,11 +235,6 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
         rb_par.setText("Paralelo");
 
         rb_bal.setText("Balanceado");
-        rb_bal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rb_balActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -282,6 +262,7 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
             .addComponent(jSeparator2)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(rb_seq)
+                .addGap(0, 0, 0)
                 .addComponent(rb_par)
                 .addGap(0, 0, 0)
                 .addComponent(rb_bal))
@@ -367,11 +348,6 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
 
         txt_zoom.setEditable(false);
         txt_zoom.setText("1.20");
-        txt_zoom.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                txt_zoomPropertyChange(evt);
-            }
-        });
 
         jLabel5.setText("ZOOM");
 
@@ -400,16 +376,14 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(48, 48, 48))
+                    .addComponent(jLabel5)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(bt_minus)
                         .addGap(0, 0, 0)
                         .addComponent(txt_zoom, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(bt_plus)
-                        .addGap(7, 7, 7)))
+                        .addComponent(bt_plus)))
+                .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(txt_itera, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -615,9 +589,7 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_aceleracao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(bt_calc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addComponent(bt_stop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(bt_stop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(0, 0, 0))
         );
         jPanel6Layout.setVerticalGroup(
@@ -653,46 +625,34 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /**
      * Botão de efetuar os calculos
-     * @param evt 
+     *
+     * @param evt
      */
     private void bt_calcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_calcActionPerformed
-        verificaRacio();
+        //verificaRacio();
         f.resizeImg(Integer.parseInt(txt_width.getText() + ""), Integer.parseInt(txt_height.getText() + ""));
         f.setSaturationBrightness((float) sl_bri.getValue(), (float) sl_sat.getValue());
         defineFractal(Long.parseLong(txt_itera.getText()));
         f.initCalculateFractalGUI();
     }//GEN-LAST:event_bt_calcActionPerformed
 
-    private void verificaRacio() {
-        // se o tamanho do painel do lado esquerdo + o tamanho do fratal < largura da janela
-        if (jPanel6.getWidth() + Integer.parseInt(txt_width.getText()) < original.width) {
-            // aplica o tamanho das textboxes porque tem espaço livre suficiente
-            jPanel2.setPreferredSize(new Dimension(Integer.parseInt(txt_width.getText()), Integer.parseInt(txt_height.getText())));
-        } else {
-            // calcula tamanho da janela
-            newDimension();
-            // encolhe a imagem para caber no monitor
-            jPanel2.setPreferredSize(original);
-        }
-        JFrame.pack();
-    }
-
     /**
      * Botão de salvar imagem
-     * @param evt 
+     *
+     * @param evt
      */
     private void bt_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_saveActionPerformed
         // criar filtro para imagens
@@ -713,24 +673,27 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
 
     /**
      * Botão atribui o tamanho UHD (4K) às textbox de Largura e Altura
-     * @param evt 
+     *
+     * @param evt
      */
     private void rb_uhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_uhdActionPerformed
         txt_width.setText("3840");
         txt_height.setText("2160");
     }//GEN-LAST:event_rb_uhdActionPerformed
-    
+
     /**
      * Label com o valor do slider (Brilho)
-     * @param evt 
+     *
+     * @param evt
      */
     private void sl_briStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sl_briStateChanged
         l_bri.setText(sl_bri.getValue() + "");
     }//GEN-LAST:event_sl_briStateChanged
-    
+
     /**
      * Label com o valor do slider (Saturação)
-     * @param evt 
+     *
+     * @param evt
      */
     private void sl_satStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sl_satStateChanged
         l_sat.setText(sl_sat.getValue() + "");
@@ -738,16 +701,18 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
 
     /**
      * Botão atribui o tamanho FULL HD às textbox de Largura e Altura
-     * @param evt 
+     *
+     * @param evt
      */
     private void rb_fhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_fhdActionPerformed
         txt_width.setText("1920");
         txt_height.setText("1080");
     }//GEN-LAST:event_rb_fhdActionPerformed
-    
+
     /**
      * Botão atribui o tamanho HD Ready às textbox de Largura e Altura
-     * @param evt 
+     *
+     * @param evt
      */
     private void rb_rhdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_rhdActionPerformed
         txt_width.setText("1280");
@@ -756,16 +721,18 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
 
     /**
      * Botão atribui o tamanho sd às textbox de Largura e Altura
-     * @param evt 
+     *
+     * @param evt
      */
     private void rb_sdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_sdActionPerformed
         txt_width.setText("720");
         txt_height.setText("576");
     }//GEN-LAST:event_rb_sdActionPerformed
-    
+
     /**
      * Botão de stop
-     * @param evt 
+     *
+     * @param evt
      */
     private void bt_stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_stopActionPerformed
         f.stopCalculateFractalGUI();
@@ -773,7 +740,7 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
 
     /**
      * Botão para calculo da acelaração
-     * 
+     *
      * @param evt
      */
     private void btn_aceleracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceleracaoActionPerformed
@@ -841,7 +808,8 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
 
     /**
      * Botão aumenta o valor do zoom
-     * @param evt 
+     *
+     * @param evt
      */
     private void bt_plusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_plusActionPerformed
         double zoom = Double.parseDouble(txt_zoom.getText());
@@ -849,10 +817,11 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
         txt_zoom.setText((zoom + "").format("%.2f", zoom).replace(",", "."));
         f.setNewZoom(Double.parseDouble(txt_zoom.getText()));
     }//GEN-LAST:event_bt_plusActionPerformed
-    
+
     /**
      * Botão diminui o valor do zoom
-     * @param evt 
+     *
+     * @param evt
      */
     private void bt_minusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_minusActionPerformed
         double zoom = Double.parseDouble(txt_zoom.getText());
@@ -861,13 +830,10 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
         f.setNewZoom(Double.parseDouble(txt_zoom.getText()));
     }//GEN-LAST:event_bt_minusActionPerformed
 
-    private void txt_zoomPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txt_zoomPropertyChange
-
-    }//GEN-LAST:event_txt_zoomPropertyChange
-
     /**
      * Botão calcula média 5 execuções
-     * @param evt 
+     *
+     * @param evt
      */
     private void btn_med5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_med5ActionPerformed
         f.resizeImg(Integer.parseInt(txt_width.getText() + ""), Integer.parseInt(txt_height.getText() + ""));
@@ -876,15 +842,15 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
 
         new Thread(() -> {
             long med = 0;
-                for (int i = 0; i < 5; i++) {
-                    f.initCalculateFractalGUI();
+            for (int i = 0; i < 5; i++) {
+                f.initCalculateFractalGUI();
 
-                    med += f.calculus.getTime();
-                    System.out.println(i + " valor: " + f.calculus.getTime());
-                }
-                med /= 5;
-                System.out.println("media: "+med);
-        }).start(); 
+                med += f.calculus.getTime();
+                System.out.println(i + " valor: " + f.calculus.getTime());
+            }
+            med /= 5;
+            System.out.println("media: " + med);
+        }).start();
     }//GEN-LAST:event_btn_med5ActionPerformed
 
     private void txt_widthKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_widthKeyPressed
@@ -897,23 +863,6 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
         br.clearSelection();
     }//GEN-LAST:event_txt_heightKeyReleased
 
-    private void rb_balActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_balActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rb_balActionPerformed
-    
-    @Override
-    public void componentResized(ComponentEvent e) {
-        newDimension();
-        verificaRacio();
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent e) { }
-    @Override
-    public void componentShown(ComponentEvent e) { }
-    @Override
-    public void componentHidden(ComponentEvent e) { }
-   
     /**
      * @param args the command line arguments
      */
@@ -957,6 +906,7 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
     private javax.swing.JButton bt_stop;
     private javax.swing.JButton btn_aceleracao;
     private javax.swing.JButton btn_med5;
+    private fractal.FractalImage f;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -974,6 +924,7 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel l_bri;
@@ -998,5 +949,5 @@ public class GUIFratal extends javax.swing.JFrame implements ComponentListener {
     private javax.swing.JTextField txt_width;
     private javax.swing.JTextField txt_zoom;
     // End of variables declaration//GEN-END:variables
-   
+
 }
