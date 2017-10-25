@@ -10,12 +10,22 @@ public class Complex {
     private final double im;   // the imaginary part
 
     // create a new object with the given real and imaginary parts
+    /**
+     * 
+     * @param real
+     * @param imag 
+     */
     public Complex(double real, double imag) {
         re = real;
         im = imag;
     }
 
     // return a new Complex object whose value is (this + b)
+    /**
+     * 
+     * @param b
+     * @return 
+     */
     public Complex plus(Complex b) {
         Complex a = this;             // invoking object
         double real = a.re + b.re;
