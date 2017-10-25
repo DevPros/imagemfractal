@@ -55,6 +55,13 @@ public final class FractalImage extends JComponent {
 
     }
 
+    /**
+     * Calcula o ponto do fractal
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public Point2D getReal(int x, int y) {
         double reX = centerX + (x - width / 2) * zoom;
         double reY = centerY - (y - height / 2) * zoom;

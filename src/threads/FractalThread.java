@@ -11,7 +11,7 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 
 /**
- * @author João Canoso  https://github.com/jpcanoso
+ * @author João Canoso https://github.com/jpcanoso
  * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class FractalThread extends Thread {
@@ -24,17 +24,20 @@ public class FractalThread extends Thread {
     public long time;
 
     /**
-     * 
+     * Construtor que executa o calculo do paralelo
+     *
      * @param ini
      * @param fin
-     * @param frac 
+     * @param frac
      */
     public FractalThread(int ini, int fin, FractalImage frac) {
         this.ini = ini;
         this.fin = fin;
         this.frac = frac;
     }
-
+    /**
+     * Calcula o fractal via paralelo
+     */
     @Override
     public void run() {
         time = System.currentTimeMillis();

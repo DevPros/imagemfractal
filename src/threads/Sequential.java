@@ -13,7 +13,7 @@ import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
 /**
- * @author João Canoso  https://github.com/jpcanoso
+ * @author João Canoso https://github.com/jpcanoso
  * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class Sequential extends FractalCalculus implements Runnable {
@@ -41,9 +41,9 @@ public class Sequential extends FractalCalculus implements Runnable {
         }
         singleThread = new Thread(this);
         txt.setText("A Calcular....");
-        
+
         singleThread.start();
-        
+
     }
 
     /**
@@ -55,15 +55,12 @@ public class Sequential extends FractalCalculus implements Runnable {
             singleThread.interrupt();
         }
     }
-    
-    
-    
 
     /**
      * Efetua os calculos de forma sequencial
      */
     @Override
-    public  void run() {
+    public void run() {
         time = System.currentTimeMillis();
         pb.setMaximum(frac.height);
         for (int y = 0; y < frac.height; y++) {

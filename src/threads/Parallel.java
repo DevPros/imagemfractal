@@ -12,7 +12,7 @@ import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
 /**
- * @author João Canoso  https://github.com/jpcanoso
+ * @author João Canoso https://github.com/jpcanoso
  * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class Parallel extends FractalCalculus {
@@ -22,6 +22,7 @@ public class Parallel extends FractalCalculus {
 
     /**
      * Contrutor paralelo
+     *
      * @param pb JProgressBar
      * @param txt JTextComponent
      * @param img FractalImage
@@ -31,7 +32,7 @@ public class Parallel extends FractalCalculus {
     }
 
     /**
-     * 
+     * Começa a calcular a thread
      */
     @Override
     public void calculate() {
@@ -76,7 +77,7 @@ public class Parallel extends FractalCalculus {
     @Override
     public void stop() {
         if (thr != null) {
-            if (thr[0].isAlive()){
+            if (thr[0].isAlive()) {
                 for (FractalThread fractalThread : thr) {
                     fractalThread.interrupt();
                 }

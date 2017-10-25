@@ -97,7 +97,7 @@ public class GUIFratal extends javax.swing.JFrame {
     }
 
     /**
-     * Slider
+     * Define os sliders
      */
     private void sliders(JSlider sl) {
         sl.setMinimum(0);

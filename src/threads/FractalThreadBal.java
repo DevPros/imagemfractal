@@ -24,19 +24,24 @@ public class FractalThreadBal extends Thread {
     // ticket
     AtomicInteger ticket;
     int y;
-
+    /**
+     * Recebe o tikect da classe que chama esta, recebe o gractal e a progressbar
+     * @param ticket
+     * @param frac
+     * @param pb 
+     */
     public FractalThreadBal(AtomicInteger ticket, FractalImage frac,JProgressBar pb) {
         this.ticket = ticket;
         this.frac = frac;
         this.pb = pb;
     }
-
+    /**
+     * Calcula o fractal via balanciado
+     */
     @Override
     public void run() {
         pb.setMaximum(y);
-        
         time = System.currentTimeMillis();
-
         while ((y = ticket.getAndDecrement()) >= 0) {
             for (int x = 0; x < frac.width; x++) {
                 Point2D r = frac.getReal(x, y);
