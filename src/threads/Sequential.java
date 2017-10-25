@@ -60,7 +60,7 @@ public class Sequential extends FractalCalculus implements Runnable {
      * Efetua os calculos de forma sequencial
      */
     @Override
-    public void run() {
+    public synchronized void run() {
         time = System.currentTimeMillis();
         pb.setMaximum(frac.height);
         for (int y = 0; y < frac.height; y++) {

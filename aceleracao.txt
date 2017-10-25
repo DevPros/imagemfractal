@@ -1,0 +1,18 @@
+25/10/2017 16:53:34
+Resolução: 3840x2160
+Algoritmo: Sequencial
+0º Calculo: 0
+1º Calculo: 1508946814329
+2º Calculo: 1508946814330
+3º Calculo: 1508946814334
+4º Calculo: 1508946814335
+Média1: 1207157451465
+--------------------------------------------------
+Algoritmo: xpto
+0º Calculo: 6343
+1º Calculo: 5626
+2º Calculo: 4943
+3º Calculo: 2206
+4º Calculo: 2015
+Média2: 4226
+Acelaração: 2.8565013E8
