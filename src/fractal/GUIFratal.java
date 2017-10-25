@@ -17,6 +17,7 @@ import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -859,7 +860,11 @@ public class GUIFratal extends javax.swing.JFrame {
                 med += f.calculus.getTime();
             }
             med /= 5;
-            jTextField1.setText(med+"");
+            jTextField1.setText(String.format("%d:%d:%d:%d",
+                TimeUnit.MILLISECONDS.toHours(med),
+                TimeUnit.MILLISECONDS.toMinutes(med) % 60,
+                TimeUnit.MILLISECONDS.toSeconds(med) % 60,
+                TimeUnit.MILLISECONDS.toMillis(med) % 1000));
         }).start();
     }//GEN-LAST:event_btn_med5ActionPerformed
     /**
