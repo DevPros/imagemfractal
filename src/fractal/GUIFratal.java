@@ -6,10 +6,6 @@
 package fractal;
 
 import fractal.functions.*;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.BufferedWriter;
@@ -651,7 +647,7 @@ public class GUIFratal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Botão de efetuar os calculos
+     * Botão de efetuar os calculos principais
      *
      * @param evt
      */
@@ -680,6 +676,8 @@ public class GUIFratal extends javax.swing.JFrame {
                 // guardar imagem png com o nome que o utilizador deu
                 ImageIO.write(f.getImg(), "png", new File(file.getAbsoluteFile() + ".png"));
             } catch (IOException ex) {
+                // lança mensagem de erro, caso nao seja possivel criar ficheiro
+                JOptionPane.showMessageDialog(jPanel1, "Ocorreu um erro ao criar o ficheiro", "Erro", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(GUIFratal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -809,7 +807,7 @@ public class GUIFratal extends javax.swing.JFrame {
                 writer.write("Média2: " + med2 + '\r' + '\n');
                 writer.write("Acelaração: " + ace);
             } catch (IOException ex) {
-                // lança mensagem de erro, caso nao jea possivel criar ficheiro
+                // lança mensagem de erro, caso nao seja possivel criar ficheiro
                 JOptionPane.showMessageDialog(jPanel1, "Ocorreu um erro ao criar o ficheiro", "Erro", JOptionPane.ERROR_MESSAGE);
             } finally {
                 try {
