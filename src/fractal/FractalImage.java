@@ -1,19 +1,22 @@
 package fractal;
 
 import fractal.functions.FractalFunction;
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 import threads.FractalCalculus;
 import threads.*;
 
 /**
- *
- * @author canoso
+ * @author João Canoso https://github.com/jpcanoso
+ * @author Rui Barcelos https://github.com/barcelosrui
  */
 public final class FractalImage extends JComponent {
 
@@ -24,6 +27,8 @@ public final class FractalImage extends JComponent {
 
     public int width;
     public int height;
+
+    double mouseX, mouseY;
 
     public double centerX = 0;
     public double centerY = 0;
@@ -47,16 +52,39 @@ public final class FractalImage extends JComponent {
      */
     public FractalImage(int width, int height) {
         resizeImg(width, height);
+
     }
 
+    public Point2D getReal(int x, int y) {
+        double reX = centerX + (x - width / 2) * zoom;
+        double reY = centerY - (y - height / 2) * zoom;
+        return new Point2D.Double(reX, reY);
+    }
+
+    /**
+     * Retorna o valor da saturação
+     *
+     * @return float
+     */
     public float getSaturation() {
         return Saturation;
     }
 
+    /**
+     * Retorna o valor do brilho
+     *
+     * @return float
+     */
     public float getBrightness() {
         return Brightness;
     }
 
+    /**
+     * Define os valores do brilho e saturação
+     *
+     * @param Brightness
+     * @param Saturation
+     */
     public void setSaturationBrightness(float Brightness, float Saturation) {
         this.Brightness = Brightness / 255f;
         this.Saturation = Saturation / 255f;
@@ -82,13 +110,23 @@ public final class FractalImage extends JComponent {
         this.height = height;
         this.setPreferredSize(new Dimension(width, height));
         img = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
-        zoom = (4.00 / width)*2;
+        zoom = (4.00 / width) * 2;
     }
 
+    /**
+     * Returna a imagem to tipo BufferedImage
+     *
+     * @return BufferedImage
+     */
     public BufferedImage getImg() {
         return img;
     }
-    
+
+    /**
+     * Define um novo zoom
+     *
+     * @param newZoom
+     */
     public void setNewZoom(double newZoom) {
         this.newZoom = newZoom;
     }
@@ -114,7 +152,7 @@ public final class FractalImage extends JComponent {
     }
 
     /**
-     * Calcula balaceamento o fractal
+     * Calcula o fratal de forma balanciada
      *
      * @param pb
      * @param txt
@@ -144,7 +182,6 @@ public final class FractalImage extends JComponent {
      */
     @Override
     public void paintComponent(Graphics gr) {
-        //gr.drawImage(img, 0, 0, null);
         gr.drawImage(img, 0, 0, getWidth(), getHeight(), this);
     }
 }

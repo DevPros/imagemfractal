@@ -5,11 +5,11 @@
  */
 package fractal.functions;
 
-import fractal.Complex;
+import external.Complex;
 
 /**
- *
- * @author Canoso
+ * @author João Canoso  https://github.com/jpcanoso
+ * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class BurningShip extends FractalFunction {
 

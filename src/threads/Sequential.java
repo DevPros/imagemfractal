@@ -5,13 +5,15 @@
  */
 package threads;
 
-import fractal.*;
+import external.Complex;
+import fractal.FractalImage;
 import java.awt.Color;
+import java.awt.geom.Point2D;
 import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
 /**
- *
+ * @author João Canoso  https://github.com/jpcanoso
  * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class Sequential extends FractalCalculus implements Runnable {
@@ -19,7 +21,7 @@ public class Sequential extends FractalCalculus implements Runnable {
     public Thread singleThread;
 
     /**
-     * Construtor
+     * Construtor sequencial
      *
      * @param pb
      * @param txt
@@ -30,7 +32,7 @@ public class Sequential extends FractalCalculus implements Runnable {
     }
 
     /**
-     * Function que serve para fazer o calculo da thread
+     * Inicia o calculo, chamando o .start() da thread
      */
     @Override
     public synchronized void calculate() {
@@ -45,7 +47,7 @@ public class Sequential extends FractalCalculus implements Runnable {
     }
 
     /**
-     * Para a thread
+     * Pára a thread
      */
     @Override
     public synchronized void stop() {
@@ -53,19 +55,23 @@ public class Sequential extends FractalCalculus implements Runnable {
             singleThread.interrupt();
         }
     }
+    
+    
+    
 
     /**
-     * Arranca a thread
+     * Efetua os calculos de forma sequencial
      */
     @Override
-    public synchronized void run() {
+    public  void run() {
         time = System.currentTimeMillis();
         pb.setMaximum(frac.height);
         for (int y = 0; y < frac.height; y++) {
             pb.setValue(y);
             for (int x = 0; x < frac.width; x++) {
-                double reX = frac.centerX + (x - frac.width / 2) * frac.zoom;
-                double reY = frac.centerY + (y - frac.height / 2) * frac.zoom;
+                Point2D r = frac.getReal(x, y);
+                double reX = r.getX();
+                double reY = r.getY();
                 int index = frac.fractal.getDivergentIteration(new Complex(reX, reY));
 
                 float Hue = (index % 256) / 255.0f;

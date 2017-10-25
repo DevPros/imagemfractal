@@ -5,11 +5,11 @@
  */
 package fractal.functions;
 
-import fractal.Complex;
+import external.Complex;
 
 /**
- *
- * @author canoso
+ * @author João Canoso  https://github.com/jpcanoso
+ * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class Madelbroth extends FractalFunction {
     

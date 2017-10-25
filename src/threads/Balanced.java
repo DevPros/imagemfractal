@@ -13,8 +13,8 @@ import javax.swing.JProgressBar;
 import javax.swing.text.JTextComponent;
 
 /**
- *
- * @author Canoso
+ * @author João Canoso  https://github.com/jpcanoso
+ * @author Rui Barcelos https://github.com/barcelosrui
  */
 public class Balanced extends FractalCalculus {
 
@@ -38,7 +38,6 @@ public class Balanced extends FractalCalculus {
         FractalThreadBal[] thr = new FractalThreadBal[cores];
         
         // senhas para os termos dos intervalos
-
         ticket = new AtomicInteger(frac.height - 1);
         
         for (int i = 0; i < thr.length; i++) {
